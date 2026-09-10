@@ -24,8 +24,8 @@ import duckdb
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT / "extract"))
 
-from extractors import get_extractor  # noqa: E402
-from loaders import get_loader  # noqa: E402
+from extractors import get_extractor
+from loaders import get_loader
 
 
 def load_config(path: str) -> dict:
@@ -137,7 +137,7 @@ def cmd_report(cfg: dict, db_path: str, load_stats: dict | None = None) -> str:
             counts[raw_name(t)] = None
     con.close()
 
-    now = dt.datetime.now().strftime("%Y-%m-%d_%H%M")
+    now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d_%H%M")
     src_label = cfg["tables"][0]["source"].get("type", "origem")
     dst_label = cfg.get("destination", {}).get("type", "destino")
     safe = {"api_key", "token", "secret"}
@@ -146,7 +146,7 @@ def cmd_report(cfg: dict, db_path: str, load_stats: dict | None = None) -> str:
     lines = [
         f"# Execução {now} — {src_label} → {dst_label}",
         "",
-        f"- **Data:** {dt.datetime.now().isoformat(timespec='seconds')}",
+        f"- **Data:** {dt.datetime.now(dt.timezone.utc).isoformat(timespec='seconds')}",
         f"- **Origem:** `{src_cfg}`",
         f"- **Destino:** `{dst_cfg}`",
         f"- **Linhas (raw):** {counts}",
@@ -180,7 +180,7 @@ def main():
     elif args.command == "load":
         cmd_load(cfg, args.db)
     elif args.command == "report":
-        import pandas as _pd2  # noqa: E402
+        import pandas as _pd2
         load_stats = {}
         for t in cfg["tables"]:
             mart = t.get("mart")
@@ -188,8 +188,8 @@ def main():
             if mart and ep.exists():
                 try:
                     load_stats[mart] = len(_pd2.read_parquet(ep))
-                except Exception:
-                    pass
+                except (OSError, ValueError):
+                    print(f"[report] aviso: sem contagem para {mart} ({ep.name})")
         cmd_report(cfg, args.db, load_stats or None)
 
 
