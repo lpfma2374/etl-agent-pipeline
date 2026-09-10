@@ -1,5 +1,7 @@
 # ETL_Agent — Data Pipeline Open Source
 
+[![CI](https://github.com/lpfma2374/etl-agent-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/lpfma2374/etl-agent-pipeline/actions/workflows/ci.yml)
+
 Pipeline de dados **CI/CD 100% open source** mantido pelo agente **ETL_Agent** (Base44 Superagent).
 Suporta extração/migração entre origens (ex.: Airtable, APIs REST, CSV) e destinos
 (ex.: Cloudflare D1, PostgreSQL, DuckDB), com transformação (dbt), qualidade e governação
