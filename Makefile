@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 DB      ?= etl_agent.duckdb
 
-.PHONY: install extract transform export validate load run report lint
+.PHONY: install extract transform export validate load run batch report lint
 
 install:
 	pip install -r requirements.txt
@@ -28,3 +28,6 @@ run: extract transform export validate load report
 
 lint:
 	ruff check extract dbt scripts
+
+batch: install  ## [batch-run] lotes de 50: pipeline completo por lote (entrega incremental)
+	python extract/run_batches.py --config config/pipeline.json --db etl_agent.duckdb --batch-size 50

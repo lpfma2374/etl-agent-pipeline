@@ -7,6 +7,31 @@ Suporta extração/migração entre origens (ex.: Airtable, APIs REST, CSV) e de
 (ex.: Cloudflare D1, PostgreSQL, DuckDB), com transformação (dbt), qualidade e governação
 de dados (Great Expectations) e registo auditável de todas as execuções.
 
+## Extração por lotes (regra ETL_Agent)
+
+A extração de uma origem é feita **por lotes de, no máximo, 50 registos**,
+de forma sequencial. Se a origem tiver 200 registos, o orquestrador determina
+**4 lotes** e executa **o pipeline completo para cada lote**:
+
+```
+lote 1: extract(50) -> dbt -> export parquet -> Great Expectations -> load -> report
+lote 2: extract(50) -> ... (se falhar: registado no report e segue o lote 3)
+...
+```
+
+- **Entrega incremental:** o destino é carregado após CADA lote validado
+  (dedupe por `primary_key` — lotes são idempotentes).
+- **Falha isolada:** um lote que aborte (dbt, gate de qualidade, load) é
+  registado no report (`docs/executions/*_batch-run.md`) e o orquestrador
+  avança para o lote seguinte — sem perder os restantes.
+- **Sumário auditável:** n.º de lotes, ok/falhados, linhas novas entregues e
+  contagem cumulativa no destino; exit code 2 sinaliza lotes falhados.
+
+```bash
+python extract/run_batches.py --config config/pipeline.json --batch-size 50
+# ou: make batch
+```
+
 ## Stack (tudo free / open source)
 
 | Camada | Ferramenta | Licença |

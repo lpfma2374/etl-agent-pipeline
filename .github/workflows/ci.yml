@@ -22,27 +22,24 @@ jobs:
       - name: Lint
         run: ruff check extract dbt scripts
 
-      - name: Gerar dados sintéticos (seed)
-        run: python scripts/make_seed.py
+      - name: Gerar dados sintéticos (seed, 200 registos -> 4 lotes)
+        run: python scripts/make_seed.py --rows 200
 
-      - name: "[1] Extract (CSV -> DuckDB raw)"
-        run: python extract/run_pipeline.py extract --config config/ci.test.json --db etl_agent.duckdb
-
-      - name: "[2] Transform (dbt: staging -> marts)"
-        run: dbt build --project-dir dbt --profiles-dir dbt --target dev
-
-      - name: "[2.5] Export marts (parquet — artefacto validado)"
-        run: python extract/run_pipeline.py export --config config/ci.test.json --db etl_agent.duckdb
-
-      - name: "[3] Validate (Great Expectations — compliance gate)"
-        working-directory: great_expectations
-        run: great_expectations checkpoint run d1_pipeline_checkpoint
-
-      - name: "[4] Load (DuckDB destino — validação de ponta a ponta)"
-        run: python extract/run_pipeline.py load --config config/ci.test.json --db etl_agent.duckdb
-
-      - name: "[5] Report"
-        run: python extract/run_pipeline.py report --config config/ci.test.json --db etl_agent.duckdb
+      - name: "Batch-run: pipeline completo por lotes de 50 (extract -> dbt -> GE -> load -> report)"
+        run: |
+          python extract/run_batches.py \
+            --config config/ci.test.json \
+            --db etl_agent.duckdb \
+            --batch-size 50
+          echo "--- verificação de entrega incremental ---"
+          python - <<'EOF'
+          import duckdb
+          con = duckdb.connect("destination.duckdb", read_only=True)
+          n = con.execute("SELECT COUNT(*) FROM contacts").fetchone()[0]
+          print(f"registos no destino: {n}")
+          assert n == 200, f"esperado 200, obtido {n}"
+          con.close()
+          EOF
 
       - name: dbt docs (catálogo)
         if: github.ref == 'refs/heads/main'
@@ -54,4 +51,5 @@ jobs:
           path: |
             docs/executions/
             target/
+            destination.duckdb
           retention-days: 30
