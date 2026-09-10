@@ -25,23 +25,23 @@ jobs:
       - name: Gerar dados sintéticos (seed)
         run: python scripts/make_seed.py
 
-      - name: [1] Extract (CSV -> DuckDB raw)
+      - name: "[1] Extract (CSV -> DuckDB raw)"
         run: python extract/run_pipeline.py extract --config config/ci.test.json --db etl_agent.duckdb
 
-      - name: [2] Transform (dbt: staging -> marts)
+      - name: "[2] Transform (dbt: staging -> marts)"
         run: dbt build --project-dir dbt --profiles-dir dbt --target dev
 
-      - name: [2.5] Export marts (parquet — artefacto validado)
+      - name: "[2.5] Export marts (parquet — artefacto validado)"
         run: python extract/run_pipeline.py export --config config/ci.test.json --db etl_agent.duckdb
 
-      - name: [3] Validate (Great Expectations — compliance gate)
+      - name: "[3] Validate (Great Expectations — compliance gate)"
         working-directory: great_expectations
         run: great_expectations checkpoint run d1_pipeline_checkpoint
 
-      - name: [4] Load (DuckDB destino — validação de ponta a ponta)
+      - name: "[4] Load (DuckDB destino — validação de ponta a ponta)"
         run: python extract/run_pipeline.py load --config config/ci.test.json --db etl_agent.duckdb
 
-      - name: [5] Report
+      - name: "[5] Report"
         run: python extract/run_pipeline.py report --config config/ci.test.json --db etl_agent.duckdb
 
       - name: dbt docs (catálogo)
