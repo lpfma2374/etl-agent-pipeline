@@ -1,0 +1,19 @@
+{
+  "name": "CI end-to-end (dados sintéticos, sem APIs externas)",
+  "tables": [
+    {
+      "source": {
+        "type": "csv",
+        "name": "contacts",
+        "path": "seed_contacts.csv"
+      },
+      "mart": "mart_contacts",
+      "destination_table": "contacts",
+      "primary_key": "id"
+    }
+  ],
+  "destination": {
+    "type": "duckdb",
+    "path": "destination.duckdb"
+  }
+}

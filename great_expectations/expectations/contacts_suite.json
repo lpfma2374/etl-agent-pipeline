@@ -1,0 +1,55 @@
+{
+  "data_asset_type": null,
+  "expectation_suite_name": "contacts_suite",
+  "expectations": [
+    {
+      "expectation_type": "expect_table_columns_to_match_ordered_list",
+      "kwargs": {
+        "column_list": ["id", "name", "email", "created_at"]
+      },
+      "meta": {
+        "notes": "Schema canónico do mart_contacts"
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "id"
+      },
+      "meta": {
+        "notes": "PK obrigatória"
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_unique",
+      "kwargs": {
+        "column": "id"
+      },
+      "meta": {
+        "notes": "Sem duplicados no destino"
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "email"
+      },
+      "meta": {
+        "notes": "Emails obrigatórios (regra de negócio)"
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_match_regex",
+      "kwargs": {
+        "column": "email",
+        "regex": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$"
+      },
+      "meta": {
+        "notes": "Formato de email válido"
+      }
+    }
+  ],
+  "meta": {
+    "great_expectations_version": "0.18.x"
+  }
+}

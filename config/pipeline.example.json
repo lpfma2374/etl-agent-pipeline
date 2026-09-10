@@ -1,0 +1,28 @@
+{
+  "name": "exemplo — Airtable para Cloudflare D1",
+  "tables": [
+    {
+      "source": {
+        "type": "airtable",
+        "name": "contacts",
+        "base_id": "appSEU_BASE_ID",
+        "table": "Contacts"
+      },
+      "mart": "mart_contacts",
+      "destination_table": "contacts",
+      "primary_key": "id"
+    }
+  ],
+  "destination": {
+    "type": "cloudflare_d1",
+    "account_id": "SEU_ACCOUNT_ID",
+    "database_id": "SEU_DATABASE_ID"
+  },
+  "_secrets_via_env": {
+    "AIRTABLE_API_KEY": "token do Airtable (personal access token)",
+    "CF_API_TOKEN": "token Cloudflare com permissão D1:edit",
+    "CF_ACCOUNT_ID": "alternativa ao account_id em cima",
+    "CF_DATABASE_ID": "alternativa ao database_id em cima"
+  },
+  "_notas": "Os segredos passam SEMPRE por variáveis de ambiente / GitHub Secrets — nunca neste ficheiro."
+}

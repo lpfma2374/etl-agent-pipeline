@@ -1,0 +1,12 @@
+# ETL_Agent pipeline — dependências (100% open source)
+dbt-core>=1.7,<1.9
+dbt-duckdb>=1.7
+duckdb>=0.10
+duckdb-engine>=0.9
+pandas>=2.0
+pyarrow>=15  # engine parquet p/ export + GE
+great-expectations>=0.18,<0.19
+sqlalchemy>=2.0,<2.0.36  # GE 0.18 é incompatível com SQLAlchemy >=2.0.36
+requests>=2.31
+pyyaml>=6.0
+ruff>=0.4

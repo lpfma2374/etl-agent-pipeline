@@ -1,0 +1,9 @@
+etl_agent:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      # relativo à raiz do repo (de onde dbt é invocado, ver Makefile/CI)
+      path: etl_agent.duckdb
+      schema: main
+      threads: 4

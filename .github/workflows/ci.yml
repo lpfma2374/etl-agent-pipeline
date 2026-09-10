@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  quality-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      - name: Lint
+        run: ruff check extract dbt scripts
+
+      - name: Gerar dados sintéticos (seed)
+        run: python scripts/make_seed.py
+
+      - name: [1] Extract (CSV -> DuckDB raw)
+        run: python extract/run_pipeline.py extract --config config/ci.test.json --db etl_agent.duckdb
+
+      - name: [2] Transform (dbt: staging -> marts)
+        run: dbt build --project-dir dbt --profiles-dir dbt --target dev
+
+      - name: [2.5] Export marts (parquet — artefacto validado)
+        run: python extract/run_pipeline.py export --config config/ci.test.json --db etl_agent.duckdb
+
+      - name: [3] Validate (Great Expectations — compliance gate)
+        working-directory: great_expectations
+        run: great_expectations checkpoint run d1_pipeline_checkpoint
+
+      - name: [4] Load (DuckDB destino — validação de ponta a ponta)
+        run: python extract/run_pipeline.py load --config config/ci.test.json --db etl_agent.duckdb
+
+      - name: [5] Report
+        run: python extract/run_pipeline.py report --config config/ci.test.json --db etl_agent.duckdb
+
+      - name: dbt docs (catálogo)
+        if: github.ref == 'refs/heads/main'
+        run: dbt docs generate --project-dir dbt --profiles-dir dbt --target dev
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: execucao-ci
+          path: |
+            docs/executions/
+            target/
+          retention-days: 30

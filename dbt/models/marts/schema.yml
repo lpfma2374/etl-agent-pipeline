@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: mart_contacts
+    description: "Modelo canónico de contacts, pronto para o destino (D1/PostgreSQL)."
+    columns:
+      - name: id
+        description: "Chave primária"
+        tests:
+          - unique
+          - not_null
+      - name: email
+        description: "Email de contacto"
+        tests:
+          - not_null

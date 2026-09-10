@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  # Ajustar os nomes das tabelas raw em cada migração
+  - name: raw
+    schema: raw
+    tables:
+      - name: raw_contacts

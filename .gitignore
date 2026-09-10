@@ -1,0 +1,16 @@
+# Dados e artefactos locais
+*.duckdb
+*.duckdb.wal
+*.csv
+.env
+config/pipeline.json
+target/
+dbt_packages/
+logs/
+great_expectations/uncommitted/
+__pycache__/
+*.pyc
+.venv/
+venv/
+gx/
+export/
