@@ -23,3 +23,14 @@ models:
           - not_null
       # "Client Name": o not_null é validado na suite GE (dbt não faz quote
       # de colunas com espaços em testes genéricos)
+
+  - name: mart_cmdb
+    description: "Espelho canónico do CSV All_CMDB.csv (Google Drive), pronto para o Airtable (base CMDB, tabela All CMDB)."
+    columns:
+      - name: "CMDB_ID"
+        description: "Chave primária posicional (1..n no ficheiro original)"
+        tests:
+          - unique
+          - not_null
+      # "Business Area": o not_null é validado na suite GE (dbt não faz quote
+      # de colunas com espaços em testes genéricos)

@@ -7,3 +7,4 @@ sources:
     tables:
       - name: raw_contacts
       - name: raw_references
+      - name: raw_cmdb

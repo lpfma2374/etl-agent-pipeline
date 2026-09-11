@@ -1,0 +1,78 @@
+{
+ "data_asset_type": null,
+ "expectation_suite_name": "cmdb_suite",
+ "expectations": [
+  {
+   "expectation_type": "expect_table_columns_to_match_ordered_list",
+   "kwargs": {
+    "column_list": [
+     "CMDB_ID",
+     "Business Area",
+     "Associated Lot",
+     "Way of working",
+     "Associated product",
+     "Functional description",
+     "Multi-geography?",
+     "Maintenance",
+     "Operation",
+     "Main technology stack",
+     "Programming language",
+     "End-user technology",
+     "PaaS",
+     "Orchestrator",
+     "IaaS",
+     "CI/CD Pipeline automated?",
+     "API based?",
+     "Microservices based?",
+     "Containerized?",
+     "Cloud Type",
+     "CloudLevel",
+     "Database technology",
+     "# of databases",
+     "Database size",
+     "Exposure to external network?",
+     "Personal data?",
+     "# of interfaces",
+     "# users",
+     "Total # of incidents",
+     "# of critical incidents (Show-stopper and critical)",
+     "Legal / regulatory application?",
+     "Organization"
+    ]
+   },
+   "meta": {
+    "notes": "Schema espelho do CSV All_CMDB.csv (com PK posicional CMDB_ID)"
+   }
+  },
+  {
+   "expectation_type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "CMDB_ID"
+   },
+   "meta": {
+    "notes": "PK obrigatória"
+   }
+  },
+  {
+   "expectation_type": "expect_column_values_to_be_unique",
+   "kwargs": {
+    "column": "CMDB_ID"
+   },
+   "meta": {
+    "notes": "Sem duplicados"
+   }
+  },
+  {
+   "expectation_type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "Business Area"
+   },
+   "meta": {
+    "notes": "Área de negócio obrigatória"
+   }
+  }
+ ],
+ "meta": {
+  "great_expectations_version": "0.18.x"
+ }
+}

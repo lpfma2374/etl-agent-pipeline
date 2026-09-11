@@ -1,0 +1,25 @@
+{
+  "name": "Google Drive All_CMDB.csv -> Airtable (nova base CMDB, tabela All CMDB)",
+  "tables": [
+    {
+      "source": {
+        "type": "google_drive",
+        "name": "cmdb",
+        "file_id": "1tRg2L2WJA4MIX61hjw1sFwVEF4twRxHC",
+        "positional_pk": "CMDB_ID"
+      },
+      "mart": "mart_cmdb",
+      "destination_table": "All CMDB",
+      "primary_key": "CMDB_ID"
+    }
+  ],
+  "destination": {
+    "type": "airtable",
+    "base_id": "TBD_APOS_CRIAR_BASE"
+  },
+  "_secrets_via_env": [
+    "AIRTABLE_API_KEY",
+    "GOOGLEDRIVE_ACCESS_TOKEN"
+  ],
+  "_notas": "PK CMDB_ID posicional (1..n). Loader cria a tabela 'All CMDB' se faltar e faz upsert por CMDB_ID (idempotente). A BASE tem de ser criada previamente (access do token). Segredos NUNCA aqui."
+}
