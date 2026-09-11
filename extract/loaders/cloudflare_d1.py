@@ -54,14 +54,25 @@ class CloudflareD1Loader(BaseLoader):
             if batch.empty:
                 break
             row_ph = "(" + ", ".join(["?"] * len(columns)) + ")"
+            cols_sql = ", ".join(f'"{c}"' for c in columns)
             sql = (
-                f'INSERT INTO "{dest_table}" ({", ".join(columns)}) VALUES '
+                f'INSERT INTO "{dest_table}" ({cols_sql}) VALUES '
                 + ", ".join([row_ph] * len(batch))
                 + f' ON CONFLICT("{primary_key}") DO UPDATE SET '
                 + ", ".join(f'"{c}" = excluded."{c}"' for c in columns if c != primary_key)
             )
-            params = [None if pd.isna(v) else v
-                      for _, row in batch.iterrows() for v in row.tolist()]
+            # NOTA D1: params TIPADOS ({"type": ...}) sobre tabelas com
+            # PRIMARY KEY devolvem SQLITE_MISMATCH (bug da API D1). Os params
+            # SIMPLES (valores nulos) preservam os tipos corretamente.
+            def plain(v):
+                # .tolist() de Series mista devolve scalars numpy
+                # (np.int32/np.float64); normalizar para nativos
+                if hasattr(v, "item"):
+                    v = v.item()
+                if v is None or (not isinstance(v, str) and pd.isna(v)):
+                    return None
+                return v
+            params = [plain(v) for _, row in batch.iterrows() for v in row.tolist()]
             self._api("POST", "query", json={"sql": sql, "params": params})
             loaded += len(batch)
             time.sleep(0.5)  # rate limit da D1 API
@@ -70,11 +81,16 @@ class CloudflareD1Loader(BaseLoader):
     @staticmethod
     def _build_ddl(table: str, df: pd.DataFrame, columns: list[str], primary_key: str) -> str:
         def sql_type(dtype):
-            if pd.api.types.is_integer(dtype):
+            # dtypes de origens variadas (pyarrow ArrowDtype, numpy 2.x
+            # Int32DType) não são reconhecidos por pd.api.types.* — usar .kind
+            if isinstance(dtype, pd.ArrowDtype):
+                dtype = dtype.numpy_dtype
+            kind = getattr(dtype, "kind", "O")  # i/u=int, f=float, b=bool
+            if kind in ("i", "u"):
                 return "INTEGER"
-            if pd.api.types.is_float(dtype):
+            if kind == "f":
                 return "REAL"
-            if pd.api.types.is_bool(dtype):
+            if kind == "b":
                 return "BOOLEAN"
             return "TEXT"
 

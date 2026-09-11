@@ -57,3 +57,15 @@ Uma entrada por linha, um relatório detalhado por execução nesta pasta.
 | 2026-09-11_1633 SUM | airtable → duckdb (batch 50) | 1 lotes | ✅ 9 novas | cumulativo: {'References': 9} |
 | 2026-09-11_1634 b01 | airtable → duckdb | {'raw_references': 9} | ✅ +9 |
 | 2026-09-11_1634 SUM | airtable → duckdb (batch 50) | 1 lotes | ✅ 9 novas | cumulativo: {'References': 9} |
+| 2026-09-11_1642 b01 | airtable → cloudflare_d1 | {'raw_references': 9} | ❌ 401 Client Error: Unauthorized for url: https://api.cloudfla |
+| 2026-09-11_1642 SUM | airtable → cloudflare_d1 (batch 50) | 1 lotes | ✅ 0 novas | cumulativo: {} |
+| 2026-09-11_1642 b01 | airtable → cloudflare_d1 | {'raw_references': 9} | ❌ 400 Client Error: Bad Request for url: https://api.cloudflar |
+| 2026-09-11_1642 SUM | airtable → cloudflare_d1 (batch 50) | 1 lotes | ✅ 0 novas | cumulativo: {} |
+| 2026-09-11_1643 b01 | airtable → cloudflare_d1 | {'raw_references': 9} | ✅ +9 |
+| 2026-09-11_1643 SUM | airtable → cloudflare_d1 (batch 50) | 1 lotes | ✅ 9 novas | cumulativo: {} |
+| 2026-09-11_1645 b01 | airtable → cloudflare_d1 | {'raw_references': 9} | ❌ 400 Client Error: Bad Request for url: https://api.cloudflar |
+| 2026-09-11_1645 SUM | airtable → cloudflare_d1 (batch 50) | 1 lotes | ✅ 0 novas | cumulativo: {} |
+| 2026-09-11_1647 b01 | airtable → cloudflare_d1 | {'raw_references': 9} | ❌ 400 Client Error: Bad Request for url: https://api.cloudflar |
+| 2026-09-11_1647 SUM | airtable → cloudflare_d1 (batch 50) | 1 lotes | ✅ 0 novas | cumulativo: {} |
+| 2026-09-11_1648 b01 | airtable → cloudflare_d1 | {'raw_references': 9} | ✅ +9 |
+| 2026-09-11_1648 SUM | airtable → cloudflare_d1 (batch 50) | 1 lotes | ✅ 9 novas | cumulativo: {} |
