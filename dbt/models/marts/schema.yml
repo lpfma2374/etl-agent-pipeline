@@ -13,3 +13,13 @@ models:
         description: "Email de contacto"
         tests:
           - not_null
+  - name: mart_references
+    description: "Espelho canónico da tabela Airtable 'References', pronto para o Cloudflare D1."
+    columns:
+      - name: "RefID"
+        description: "Chave primária (autoNumber do Airtable)"
+        tests:
+          - unique
+          - not_null
+      # "Client Name": o not_null é validado na suite GE (dbt não faz quote
+      # de colunas com espaços em testes genéricos)

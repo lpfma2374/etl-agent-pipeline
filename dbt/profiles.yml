@@ -3,7 +3,8 @@ etl_agent:
   outputs:
     dev:
       type: duckdb
-      # relativo à raiz do repo (de onde dbt é invocado, ver Makefile/CI)
-      path: etl_agent.duckdb
+      # relativo à raiz do repo (de onde dbt é invocado, ver Makefile/CI).
+      # O batch-run define DBT_DUCKDB_PATH; predefinição para uso manual.
+      path: "{{ env_var('DBT_DUCKDB_PATH', 'etl_agent.duckdb') }}"
       schema: main
       threads: 4

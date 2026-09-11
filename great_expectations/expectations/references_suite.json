@@ -1,0 +1,62 @@
+{
+  "data_asset_type": null,
+  "expectation_suite_name": "references_suite",
+  "expectations": [
+    {
+      "expectation_type": "expect_table_columns_to_match_ordered_list",
+      "kwargs": {
+        "column_list": [
+          "RefID",
+          "Airtable Record ID",
+          "Created Time",
+          "Client Name",
+          "About the Client",
+          "Challenge",
+          "Solution",
+          "Results",
+          "Feedback",
+          "Volume in Euros",
+          "Number of Resources",
+          "Area",
+          "Form Response Edit URL",
+          "Start Date",
+          "Delivery",
+          "Add document"
+        ]
+      },
+      "meta": {
+        "notes": "Schema espelho da tabela Airtable 'References'"
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "RefID"
+      },
+      "meta": {
+        "notes": "PK obrigatória"
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_unique",
+      "kwargs": {
+        "column": "RefID"
+      },
+      "meta": {
+        "notes": "Sem duplicados no destino"
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "Client Name"
+      },
+      "meta": {
+        "notes": "Nome do cliente obrigatório"
+      }
+    }
+  ],
+  "meta": {
+    "great_expectations_version": "0.18.x"
+  }
+}

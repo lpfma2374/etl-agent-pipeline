@@ -49,8 +49,45 @@ class AirtableExtractor(BaseExtractor):
         )
         resp.raise_for_status()
         data = resp.json()
-        return ([r["fields"] for r in data.get("records", [])],
-                data.get("offset"))
+        records = [
+            {"_airtable_id": r["id"],
+             "_airtable_created": r.get("createdTime"),
+             **r["fields"]}
+            for r in data.get("records", [])
+        ]
+        return (records, data.get("offset"))
+
+    def schema(self, source_cfg: dict) -> list | None:
+        """Nomes dos campos da tabela via metadata API (None se o token não
+        tiver permissão de schema). O Airtable só devolve campos POPULADOS
+        nos registos — com o schema garantimos colunas em falta como NULL."""
+        api_key = os.environ.get("AIRTABLE_API_KEY")
+        base_id, table_id = source_cfg.get("base_id"), source_cfg.get("table")
+        if not api_key or not base_id:
+            return None
+        try:
+            resp = requests.get(
+                f"{self.BASE_URL}/meta/bases/{base_id}/tables",
+                headers={"Authorization": f"Bearer {api_key}"}, timeout=60,
+            )
+            resp.raise_for_status()
+            for t in resp.json().get("tables", []):
+                if t["id"] == table_id or t["name"] == table_id:
+                    return [f["name"] for f in t.get("fields", [])]
+        except requests.RequestException:
+            return None
+        return None
+
+    def _fill_schema(self, df: pd.DataFrame, source_cfg: dict) -> pd.DataFrame:
+        """Reindexa o lote para o schema completo (colunas vazias -> NULL)."""
+        fields = self.schema(source_cfg)
+        if not fields or df.empty:
+            return df
+        meta = [c for c in df.columns if c.startswith("_airtable_")]
+        missing = [f for f in fields if f not in df.columns]
+        for f in missing:
+            df[f] = None
+        return df[meta + fields]
 
     def fetch(self, source_cfg: dict) -> pd.DataFrame:
         """Extração completa (todos os lotes) — usada fora do modo batch."""
@@ -61,8 +98,8 @@ class AirtableExtractor(BaseExtractor):
             if not cursor:
                 break
             time.sleep(0.25)  # respeita rate limit (5 req/s)
-        return self._to_df(records)
+        return self._fill_schema(self._to_df(records), source_cfg)
 
     def fetch_batch(self, source_cfg: dict, batch_size: int, cursor=None):
         page, next_cursor = self._request_page(source_cfg, batch_size, cursor)
-        return self._to_df(page), next_cursor
+        return self._fill_schema(self._to_df(page), source_cfg), next_cursor

@@ -29,22 +29,27 @@ from extract.run_pipeline import (
 )
 
 
-def _run_dbt() -> None:
-    """[2] Transform — dbt build (staging -> marts) sobre o raw do lote atual."""
+def _run_dbt(cfg: dict, db_path: str) -> None:
+    """[2] Transform — dbt build (staging -> marts) sobre o raw do lote atual.
+    Só constrói os marts da config (+ pais) — raw de outras migrações não existe."""
+    marts = sorted({t.get("mart") or raw_name(t) for t in cfg["tables"]})
+    import os
+    env = {**os.environ, "DBT_DUCKDB_PATH": db_path}
     r = subprocess.run(
-        ["dbt", "build", "--project-dir", "dbt", "--profiles-dir", "dbt", "--target", "dev"],
-        cwd=REPO_ROOT, capture_output=True, text=True, check=False,
+        ["dbt", "build", "--project-dir", "dbt", "--profiles-dir", "dbt",
+         "--target", "dev", "--select", " ".join("+" + m for m in marts)],
+        cwd=REPO_ROOT, capture_output=True, text=True, check=False, env=env,
     )
     if r.returncode != 0:
         tail = "\n".join((r.stdout or "").splitlines()[-12:])
         raise RuntimeError(f"dbt build falhou:\n{tail}")
 
 
-def _validate_ge() -> int:
+def _validate_ge(checkpoint: str = "d1_pipeline_checkpoint") -> int:
     """[3] Validate — Great Expectations sobre o parquet exportado (gate)."""
     import great_expectations as gx
     ctx = gx.get_context(context_root_dir=str(REPO_ROOT / "great_expectations"))
-    result = ctx.run_checkpoint("d1_pipeline_checkpoint")
+    result = ctx.run_checkpoint(checkpoint)
     if not result.success:
         raise RuntimeError("gate de qualidade GE falhou — lote NÃO é carregado")
     return 1  # checkpoint executado
@@ -90,7 +95,8 @@ def _destination_totals(cfg: dict) -> dict:
     return totals
 
 
-def run_batches(cfg: dict, db_path: str, batch_size: int) -> dict:
+def run_batches(cfg: dict, db_path: str, batch_size: int,
+                checkpoint: str = "d1_pipeline_checkpoint") -> dict:
     """Executa a migração completa em lotes sequenciais de `batch_size` registos."""
     # estado por tabela: cursor + done
     state = {raw_name(t): {"cursor": None, "done": False} for t in cfg["tables"]}
@@ -147,9 +153,9 @@ def run_batches(cfg: dict, db_path: str, batch_size: int) -> dict:
             con = connect(db_path)
             _extract_batch_slice(con, cfg, batch_no, slices)
             con.close()
-            _run_dbt()                                   # [2] transform
+            _run_dbt(cfg, db_path)                          # [2] transform
             cmd_export(cfg, db_path)                     # [2.5] artefacto
-            _validate_ge()                                # [3] gate
+            _validate_ge(checkpoint)                        # [3] gate
             loaded = cmd_load(cfg, db_path)               # [4] load incremental
             rows_loaded = sum(
                 v for k, v in loaded.items()
@@ -249,9 +255,11 @@ def main():
     ap.add_argument("--db", default="etl_agent.duckdb")
     ap.add_argument("--batch-size", type=int, default=50,
                     help="máx. de registos por lote (predefinição: 50)")
+    ap.add_argument("--checkpoint", default="d1_pipeline_checkpoint",
+                    help="checkpoint Great Expectations (gate de qualidade)")
     args = ap.parse_args()
     cfg = load_config(args.config)
-    summary = run_batches(cfg, args.db, args.batch_size)
+    summary = run_batches(cfg, args.db, args.batch_size, args.checkpoint)
     if summary["batches_failed"]:
         sys.exit(2)  # há falhas registadas — sinaliza sem abortar os lotes restantes
     sys.exit(0)
