@@ -15,7 +15,7 @@
   ],
   "destination": {
     "type": "airtable",
-    "base_id": "TBD_APOS_CRIAR_BASE"
+    "base_id": "app644avLfTLfAmlN"
   },
   "_secrets_via_env": [
     "AIRTABLE_API_KEY",

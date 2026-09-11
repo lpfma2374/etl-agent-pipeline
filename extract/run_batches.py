@@ -162,7 +162,7 @@ def run_batches(cfg: dict, db_path: str, batch_size: int,
                 if Path(k).name.endswith(".parquet")
             )
             print(f"[batch {batch_no}] OK: {batch_src_rows} extraídos, "
-                  f"{rows_loaded} linhas NOVAS no destino")
+                  f"{rows_loaded} linhas entregues no destino (upsert idempotente)")
             results.append({
                 "batch": batch_no, "status": "ok",
                 "rows": batch_src_rows, "loaded": rows_loaded,
@@ -197,11 +197,11 @@ def _batch_report(cfg, db_path, batch_size, results, plan) -> dict:
         "",
         f"- **Data:** {now.isoformat(timespec='seconds')}",
         f"- **Lotes:** {len(results)} executados | ✅ {len(ok)} | ❌ {len(failed)}",
-        f"- **Linhas entregues no destino (novas):** {rows_delivered}",
+        f"- **Linhas entregues no destino (upsert idempotente):** {rows_delivered}",
         f"- **Contagem cumulativa no destino:** {totals}",
         f"- **Plano previsto:** {plan}",
         "",
-        "| Lote | Estado | Linhas (raw) | Novas no destino | Erro |",
+        "| Lote | Estado | Linhas (raw) | Entregues (upsert) | Erro |",
         "|---|---|---|---|---|",
     ]
     for r in results:
@@ -232,7 +232,7 @@ def _batch_report(cfg, db_path, batch_size, results, plan) -> dict:
                 f"{'✅ +' + str(r['loaded']) if r['status'] == 'ok' else '❌ ' + (r.get('error', '') or '')[:60]} |\n")
         fh.write(
             f"| {stamp} SUM | {src_label} → {dst_label} (batch {batch_size}) "
-            f"| {len(results)} lotes | ✅ {rows_delivered} novas | cumulativo: {totals} |\n")
+            f"| {len(results)} lotes | ✅ {rows_delivered} entregues (upsert) | cumulativo: {totals} |\n")
 
     summary = {
         "batches_total": len(results),
@@ -244,7 +244,7 @@ def _batch_report(cfg, db_path, batch_size, results, plan) -> dict:
     }
     print(f"[report] {out}")
     print(f"[batch-run] CONCLUÍDO: {len(ok)}/{len(results)} lotes OK, "
-          f"{rows_delivered} linhas novas no destino, cumulativo {totals}")
+          f"{rows_delivered} linhas entregues no destino (upsert idempotente), cumulativo {totals}")
     return summary
 
 

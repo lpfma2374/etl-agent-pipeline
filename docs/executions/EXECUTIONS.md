@@ -69,3 +69,19 @@ Uma entrada por linha, um relatório detalhado por execução nesta pasta.
 | 2026-09-11_1647 SUM | airtable → cloudflare_d1 (batch 50) | 1 lotes | ✅ 0 novas | cumulativo: {} |
 | 2026-09-11_1648 b01 | airtable → cloudflare_d1 | {'raw_references': 9} | ✅ +9 |
 | 2026-09-11_1648 SUM | airtable → cloudflare_d1 (batch 50) | 1 lotes | ✅ 9 novas | cumulativo: {} |
+| 2026-09-11_1900 b01 | google_drive → airtable | {'raw_cmdb': 50} | ✅ +50 |
+| 2026-09-11_1900 b02 | google_drive → airtable | {'raw_cmdb': 50} | ✅ +50 |
+| 2026-09-11_1900 b03 | google_drive → airtable | {'raw_cmdb': 37} | ✅ +37 |
+| 2026-09-11_1900 SUM | google_drive → airtable (batch 50) | 3 lotes | ✅ 137 novas | cumulativo: {} |
+| 2026-09-11_1900 b01 | google_drive → airtable | {'raw_cmdb': 50} | ✅ +50 |
+| 2026-09-11_1900 b02 | google_drive → airtable | {'raw_cmdb': 50} | ✅ +50 |
+| 2026-09-11_1900 b03 | google_drive → airtable | {'raw_cmdb': 37} | ✅ +37 |
+| 2026-09-11_1900 SUM | google_drive → airtable (batch 50) | 3 lotes | ✅ 137 novas | cumulativo: {} |
+| 2026-09-11_1901 b01 | google_drive → airtable | {'raw_cmdb': 50} | ✅ +50 |
+| 2026-09-11_1901 b02 | google_drive → airtable | {'raw_cmdb': 50} | ✅ +50 |
+| 2026-09-11_1901 b03 | google_drive → airtable | {'raw_cmdb': 37} | ✅ +37 |
+| 2026-09-11_1901 SUM | google_drive → airtable (batch 50) | 3 lotes | ✅ 137 entregues (upsert) | cumulativo: {} |
+| 2026-09-11_1902 b01 | google_drive → airtable | {'raw_cmdb': 50} | ✅ +50 |
+| 2026-09-11_1902 b02 | google_drive → airtable | {'raw_cmdb': 50} | ✅ +50 |
+| 2026-09-11_1902 b03 | google_drive → airtable | {'raw_cmdb': 37} | ✅ +37 |
+| 2026-09-11_1902 SUM | google_drive → airtable (batch 50) | 3 lotes | ✅ 137 entregues (upsert) | cumulativo: {} |
