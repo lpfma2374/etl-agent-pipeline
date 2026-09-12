@@ -1,0 +1,63 @@
+{
+ "data_asset_type": null,
+ "expectation_suite_name": "fases_suite",
+ "expectations": [
+  {
+   "expectation_type": "expect_table_columns_to_match_ordered_list",
+   "kwargs": {
+    "column_list": [
+     "Fase_ID",
+     "ID Processo",
+     "Nº Processo",
+     "Nome do Processo",
+     "Nº Fase",
+     "Título",
+     "Descrição",
+     "Questões-Chave",
+     "Probabilidade",
+     "Fase Venda",
+     "Responsável",
+     "Participantes",
+     "Input",
+     "Output",
+     "Quando/Como",
+     "Destino",
+     "Documentos Suporte"
+    ]
+   },
+   "meta": {
+    "notes": "Schema espelho do CSV 03_Fases.csv"
+   }
+  },
+  {
+   "expectation_type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "Fase_ID"
+   },
+   "meta": {
+    "notes": "PK obrigatória"
+   }
+  },
+  {
+   "expectation_type": "expect_column_values_to_be_unique",
+   "kwargs": {
+    "column": "Fase_ID"
+   },
+   "meta": {
+    "notes": "Sem duplicados"
+   }
+  },
+  {
+   "expectation_type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "ID Processo"
+   },
+   "meta": {
+    "notes": "Coluna-chave do processo obrigatória"
+   }
+  }
+ ],
+ "meta": {
+  "great_expectations_version": "0.18.x"
+ }
+}

@@ -1,0 +1,51 @@
+{
+ "data_asset_type": null,
+ "expectation_suite_name": "indicadores_eficacia_suite",
+ "expectations": [
+  {
+   "expectation_type": "expect_table_columns_to_match_ordered_list",
+   "kwargs": {
+    "column_list": [
+     "Indicador_ID",
+     "ID Processo",
+     "Nº Processo",
+     "Nome do Processo",
+     "Indicador"
+    ]
+   },
+   "meta": {
+    "notes": "Schema espelho do CSV 02_Indicadores_Eficacia.csv"
+   }
+  },
+  {
+   "expectation_type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "Indicador_ID"
+   },
+   "meta": {
+    "notes": "PK obrigatória"
+   }
+  },
+  {
+   "expectation_type": "expect_column_values_to_be_unique",
+   "kwargs": {
+    "column": "Indicador_ID"
+   },
+   "meta": {
+    "notes": "Sem duplicados"
+   }
+  },
+  {
+   "expectation_type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "ID Processo"
+   },
+   "meta": {
+    "notes": "Coluna-chave do processo obrigatória"
+   }
+  }
+ ],
+ "meta": {
+  "great_expectations_version": "0.18.x"
+ }
+}

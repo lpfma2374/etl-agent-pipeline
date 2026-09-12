@@ -1,0 +1,54 @@
+{
+ "data_asset_type": null,
+ "expectation_suite_name": "historico_versoes_suite",
+ "expectations": [
+  {
+   "expectation_type": "expect_table_columns_to_match_ordered_list",
+   "kwargs": {
+    "column_list": [
+     "Versao_ID",
+     "ID Processo",
+     "Nº Processo",
+     "Nome do Processo",
+     "Versão",
+     "Descrição",
+     "Data",
+     "Implicações"
+    ]
+   },
+   "meta": {
+    "notes": "Schema espelho do CSV 05_Historico_Versoes.csv"
+   }
+  },
+  {
+   "expectation_type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "Versao_ID"
+   },
+   "meta": {
+    "notes": "PK obrigatória"
+   }
+  },
+  {
+   "expectation_type": "expect_column_values_to_be_unique",
+   "kwargs": {
+    "column": "Versao_ID"
+   },
+   "meta": {
+    "notes": "Sem duplicados"
+   }
+  },
+  {
+   "expectation_type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "ID Processo"
+   },
+   "meta": {
+    "notes": "Coluna-chave do processo obrigatória"
+   }
+  }
+ ],
+ "meta": {
+  "great_expectations_version": "0.18.x"
+ }
+}

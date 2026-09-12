@@ -34,3 +34,54 @@ models:
           - not_null
       # "Business Area": o not_null é validado na suite GE (dbt não faz quote
       # de colunas com espaços em testes genéricos)
+
+  - name: mart_processos_resumo
+    description: "Espelho canónico do CSV 01_Processos_Resumo.csv (zip Frameworks), pronto para o Airtable (base Frameworks, tabela Processos Resumo)."
+    # PK "ID Processo" (com espaço): unique/not_null validados na suite GE
+    # processos_resumo_suite (dbt não faz quote de colunas com espaços em
+    # testes genéricos)
+
+  - name: mart_indicadores_eficacia
+    description: "Espelho canónico do CSV 02_Indicadores_Eficacia.csv (zip Frameworks), pronto para o Airtable (base Frameworks, tabela Indicadores Eficacia)."
+    columns:
+      - name: "Indicador_ID"
+        description: "Chave primária"
+        tests:
+          - unique
+          - not_null
+
+  - name: mart_fases
+    description: "Espelho canónico do CSV 03_Fases.csv (zip Frameworks), pronto para o Airtable (base Frameworks, tabela Fases)."
+    columns:
+      - name: "Fase_ID"
+        description: "Chave primária"
+        tests:
+          - unique
+          - not_null
+
+  - name: mart_subseccoes_fases
+    description: "Espelho canónico do CSV 04_Subseccoes_Fases.csv (zip Frameworks), pronto para o Airtable (base Frameworks, tabela Subseccoes Fases)."
+    columns:
+      - name: "Subseccao_ID"
+        description: "Chave primária"
+        tests:
+          - unique
+          - not_null
+
+  - name: mart_historico_versoes
+    description: "Espelho canónico do CSV 05_Historico_Versoes.csv (zip Frameworks), pronto para o Airtable (base Frameworks, tabela Historico Versoes)."
+    columns:
+      - name: "Versao_ID"
+        description: "Chave primária"
+        tests:
+          - unique
+          - not_null
+
+  - name: mart_quadro_registos
+    description: "Espelho canónico do CSV 06_Quadro_Registos.csv (zip Frameworks), pronto para o Airtable (base Frameworks, tabela Quadro Registos)."
+    columns:
+      - name: "Registo_ID"
+        description: "Chave primária"
+        tests:
+          - unique
+          - not_null

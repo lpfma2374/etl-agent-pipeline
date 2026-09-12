@@ -51,8 +51,17 @@ def _validate_ge(checkpoint: str = "d1_pipeline_checkpoint") -> int:
     ctx = gx.get_context(context_root_dir=str(REPO_ROOT / "great_expectations"))
     result = ctx.run_checkpoint(checkpoint)
     if not result.success:
-        raise RuntimeError("gate de qualidade GE falhou — lote NÃO é carregado")
+        raise RuntimeError(f"gate de qualidade GE falhou ({checkpoint}) — lote NÃO é carregado")
     return 1  # checkpoint executado
+
+
+def _validate_all(cfg: dict, fallback_checkpoint: str) -> int:
+    """[3] Validate — uma suite GE POR TABELA (t["checkpoint"] se definido;
+    senão o checkpoint indicado na CLI). Todas têm de passar para haver load."""
+    n = 0
+    for t in cfg["tables"]:
+        n += _validate_ge(t.get("checkpoint") or fallback_checkpoint)
+    return n
 
 
 def _extract_batch_slice(con, cfg: dict, batch_no: int, slices: dict) -> None:
@@ -155,7 +164,7 @@ def run_batches(cfg: dict, db_path: str, batch_size: int,
             con.close()
             _run_dbt(cfg, db_path)                          # [2] transform
             cmd_export(cfg, db_path)                     # [2.5] artefacto
-            _validate_ge(checkpoint)                        # [3] gate
+            _validate_all(cfg, checkpoint)                    # [3] gate
             loaded = cmd_load(cfg, db_path)               # [4] load incremental
             rows_loaded = sum(
                 v for k, v in loaded.items()

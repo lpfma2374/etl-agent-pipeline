@@ -1,0 +1,16 @@
+name: subseccoes_fases_checkpoint
+config_version: 1
+class_name: Checkpoint
+run_name_template: "%Y%m%d-%H%M%S-etl-agent-subseccoes_fases"
+expectation_suite_name: subseccoes_fases_suite
+batch_request:
+  datasource_name: marts_datasource
+  data_connector_name: default_inferred_data_connector_name
+  data_asset_name: mart_subseccoes_fases
+action_list:
+  - name: store_validation_result
+    action:
+      class_name: StoreValidationResultAction
+  - name: store_evaluation_params
+    action:
+      class_name: StoreEvaluationParametersAction

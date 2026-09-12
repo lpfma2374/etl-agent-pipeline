@@ -1,4 +1,9 @@
-"""Extractor CSV — leitura local (útil para testes e importações em lote)."""
+"""Extractor CSV — leitura local (útil para testes e importações em lote).
+
+Suporta `positional_pk` (nome de coluna): injeta uma PK posicional
+1..n GLOBAL (numeração contínua entre lotes, estável enquanto a ordem
+das linhas do ficheiro não mudar).
+"""
 
 import pandas as pd
 
@@ -8,11 +13,19 @@ from .base import BaseExtractor
 class CsvExtractor(BaseExtractor):
     name = "csv"
 
+    @staticmethod
+    def _with_pk(df: pd.DataFrame, pk: str | None, start: int) -> pd.DataFrame:
+        if pk:
+            df = df.copy()
+            df.insert(0, pk, range(start + 1, start + 1 + len(df)))
+        return df
+
     def fetch(self, source_cfg: dict) -> pd.DataFrame:
         path = source_cfg.get("path")
         if not path:
             raise ValueError("'path' do CSV em falta no bloco 'source'")
-        return pd.read_csv(path)
+        df = pd.read_csv(path)
+        return self._with_pk(df, source_cfg.get("positional_pk"), 0)
 
     def fetch_batch(self, source_cfg: dict, batch_size: int, cursor=None):
         path = source_cfg.get("path")
@@ -27,6 +40,7 @@ class CsvExtractor(BaseExtractor):
         )
         if len(batch) == 0:
             return batch, None
+        batch = self._with_pk(batch, source_cfg.get("positional_pk"), start)
         next_cursor = start + len(batch)
         exhausted = len(batch) < batch_size
         return batch, (None if exhausted else next_cursor)

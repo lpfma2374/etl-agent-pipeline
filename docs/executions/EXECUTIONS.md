@@ -85,3 +85,11 @@ Uma entrada por linha, um relatório detalhado por execução nesta pasta.
 | 2026-09-11_1902 b02 | google_drive → airtable | {'raw_cmdb': 50} | ✅ +50 |
 | 2026-09-11_1902 b03 | google_drive → airtable | {'raw_cmdb': 37} | ✅ +37 |
 | 2026-09-11_1902 SUM | google_drive → airtable (batch 50) | 3 lotes | ✅ 137 entregues (upsert) | cumulativo: {} |
+| 2026-09-12_0901 b01 | csv → airtable | {'raw_processos_resumo': 17, 'raw_indicadores_eficacia': 50, 'raw_fases': 50, 'raw_subseccoes_fases': 50, 'raw_historico_versoes': 22, 'raw_quadro_registos': 50} | ✅ +239 |
+| 2026-09-12_0901 b02 | csv → airtable | {'raw_indicadores_eficacia': 50, 'raw_fases': 40, 'raw_subseccoes_fases': 26, 'raw_quadro_registos': 7} | ✅ +162 |
+| 2026-09-12_0901 b03 | csv → airtable | {'raw_indicadores_eficacia': 13} | ✅ +125 |
+| 2026-09-12_0901 SUM | csv → airtable (batch 50) | 3 lotes | ✅ 526 entregues (upsert) | cumulativo: {} |
+| 2026-09-12_0901 b01 | csv → airtable | {'raw_processos_resumo': 17, 'raw_indicadores_eficacia': 50, 'raw_fases': 50, 'raw_subseccoes_fases': 50, 'raw_historico_versoes': 22, 'raw_quadro_registos': 50} | ✅ +239 |
+| 2026-09-12_0901 b02 | csv → airtable | {'raw_indicadores_eficacia': 50, 'raw_fases': 40, 'raw_subseccoes_fases': 26, 'raw_quadro_registos': 7} | ✅ +162 |
+| 2026-09-12_0901 b03 | csv → airtable | {'raw_indicadores_eficacia': 13} | ✅ +125 |
+| 2026-09-12_0901 SUM | csv → airtable (batch 50) | 3 lotes | ✅ 526 entregues (upsert) | cumulativo: {} |

@@ -1,0 +1,60 @@
+{
+ "data_asset_type": null,
+ "expectation_suite_name": "processos_resumo_suite",
+ "expectations": [
+  {
+   "expectation_type": "expect_table_columns_to_match_ordered_list",
+   "kwargs": {
+    "column_list": [
+     "ID Processo",
+     "Nº Processo",
+     "Nome do Processo",
+     "Versão",
+     "Data Versão",
+     "Unidade Responsável",
+     "Pessoa Responsável",
+     "Estado",
+     "Objetivo",
+     "Âmbito",
+     "Processos Relacionados",
+     "Lista de Templates",
+     "Data Criação",
+     "Última Atualização"
+    ]
+   },
+   "meta": {
+    "notes": "Schema espelho do CSV 01_Processos_Resumo.csv"
+   }
+  },
+  {
+   "expectation_type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "ID Processo"
+   },
+   "meta": {
+    "notes": "PK obrigatória"
+   }
+  },
+  {
+   "expectation_type": "expect_column_values_to_be_unique",
+   "kwargs": {
+    "column": "ID Processo"
+   },
+   "meta": {
+    "notes": "Sem duplicados"
+   }
+  },
+  {
+   "expectation_type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "Nome do Processo"
+   },
+   "meta": {
+    "notes": "Coluna-chave do processo obrigatória"
+   }
+  }
+ ],
+ "meta": {
+  "great_expectations_version": "0.18.x"
+ }
+}

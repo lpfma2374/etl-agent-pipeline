@@ -1,0 +1,84 @@
+{
+  "name": "Zip Frameworks_files (6 CSVs) -> Airtable (base Frameworks, 6 tabelas)",
+  "tables": [
+    {
+      "source": {
+        "type": "csv",
+        "name": "processos_resumo",
+        "path": "data/frameworks/01_Processos_Resumo.csv"
+      },
+      "mart": "mart_processos_resumo",
+      "destination_table": "Processos Resumo",
+      "primary_key": "ID Processo",
+      "checkpoint": "processos_resumo_checkpoint"
+    },
+    {
+      "source": {
+        "type": "csv",
+        "name": "indicadores_eficacia",
+        "path": "data/frameworks/02_Indicadores_Eficacia.csv",
+        "positional_pk": "Indicador_ID"
+      },
+      "mart": "mart_indicadores_eficacia",
+      "destination_table": "Indicadores Eficacia",
+      "primary_key": "Indicador_ID",
+      "checkpoint": "indicadores_eficacia_checkpoint"
+    },
+    {
+      "source": {
+        "type": "csv",
+        "name": "fases",
+        "path": "data/frameworks/03_Fases.csv",
+        "positional_pk": "Fase_ID"
+      },
+      "mart": "mart_fases",
+      "destination_table": "Fases",
+      "primary_key": "Fase_ID",
+      "checkpoint": "fases_checkpoint"
+    },
+    {
+      "source": {
+        "type": "csv",
+        "name": "subseccoes_fases",
+        "path": "data/frameworks/04_Subseccoes_Fases.csv",
+        "positional_pk": "Subseccao_ID"
+      },
+      "mart": "mart_subseccoes_fases",
+      "destination_table": "Subseccoes Fases",
+      "primary_key": "Subseccao_ID",
+      "checkpoint": "subseccoes_fases_checkpoint"
+    },
+    {
+      "source": {
+        "type": "csv",
+        "name": "historico_versoes",
+        "path": "data/frameworks/05_Historico_Versoes.csv",
+        "positional_pk": "Versao_ID"
+      },
+      "mart": "mart_historico_versoes",
+      "destination_table": "Historico Versoes",
+      "primary_key": "Versao_ID",
+      "checkpoint": "historico_versoes_checkpoint"
+    },
+    {
+      "source": {
+        "type": "csv",
+        "name": "quadro_registos",
+        "path": "data/frameworks/06_Quadro_Registos.csv",
+        "positional_pk": "Registo_ID"
+      },
+      "mart": "mart_quadro_registos",
+      "destination_table": "Quadro Registos",
+      "primary_key": "Registo_ID",
+      "checkpoint": "quadro_registos_checkpoint"
+    }
+  ],
+  "destination": {
+    "type": "airtable",
+    "base_id": "apppOTLgiRO5kH4oA"
+  },
+  "_secrets_via_env": [
+    "AIRTABLE_API_KEY"
+  ],
+  "_notas": "Fonte: zip 'Frameworks_files' enviado no chat; CSVs extraidos para data/frameworks/ (gitignored). PK posicional nas tabelas sem chave natural; 'Processos Resumo' usa ID Processo (hex, unico). Loader faz upsert por PK (idempotente). Cada tabela tem o seu checkpoint GE (gate por tabela). Base 'Frameworks' criada via API com schema tipado (numbers/multiline/singleLine). Segredos NUNCA aqui."
+}
