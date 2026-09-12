@@ -1,0 +1,53 @@
+# Utilitário (Framework agent): transfere o AIRTABLE_API_KEY deste repo (GitHub
+# Secrets, onde o ETL_Agent o deixou) para o projeto Vercel 'frameworks' via API.
+# O valor nunca é impresso — flui encriptado de secret para env var.
+name: Sincronizar AIRTABLE_API_KEY para Vercel
+
+on:
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Transferir (sem expor o valor)
+        env:
+          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          if [ -z "$AIRTABLE_API_KEY" ]; then echo "AIRTABLE_API_KEY ausente"; exit 1; fi
+          if [ -z "$VERCEL_TOKEN" ]; then echo "VERCEL_TOKEN ausente"; exit 1; fi
+          python3 - <<'PYEOF'
+          import json, os, urllib.request, urllib.error
+
+          token = os.environ['VERCEL_TOKEN']
+          key = os.environ['AIRTABLE_API_KEY']
+
+          def api(method, url, data=None):
+              req = urllib.request.Request(url, method=method,
+                  data=json.dumps(data).encode() if data else None,
+                  headers={'Authorization': f'Bearer {token}', 'Content-Type': 'application/json'})
+              try:
+                  with urllib.request.urlopen(req) as r:
+                      return r.status, json.loads(r.read() or b'{}')
+              except urllib.error.HTTPError as e:
+                  return e.code, json.loads(e.read() or b'{}')
+
+          status, d = api('GET', 'https://api.vercel.com/v9/projects/frameworks/env')
+          if status != 200:
+              print('list:', status); raise SystemExit(1)
+          for e in d.get('envs', []):
+              if e.get('key') == 'AIRTABLE_API_KEY':
+                  s2, _ = api('DELETE', 'https://api.vercel.com/v9/projects/frameworks/env/' + e['id'])
+                  print('env var anterior removida:', s2)
+
+          status, d = api('POST', 'https://api.vercel.com/v9/projects/frameworks/env', {
+              'key': 'AIRTABLE_API_KEY',
+              'value': key,
+              'type': 'encrypted',
+              'target': ['production', 'preview', 'development'],
+          })
+          if status not in (200, 201):
+              print('create:', status, json.dumps(d)[:300]); raise SystemExit(1)
+          print('AIRTABLE_API_KEY definida no projeto Vercel frameworks')
+          PYEOF
