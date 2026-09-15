@@ -1,0 +1,239 @@
+{
+  "name": "Airtable Frameworks (6 tabelas) -> Neon PostgreSQL (relacional, com FKs)",
+  "tables": [
+    {
+      "source": {
+        "type": "airtable",
+        "name": "processos_resumo",
+        "base_id": "apppOTLgiRO5kH4oA",
+        "table": "Processos Resumo",
+        "fields": [
+          "ID Processo",
+          "Nº Processo",
+          "Nome do Processo",
+          "Versão",
+          "Data Versão",
+          "Unidade Responsável",
+          "Pessoa Responsável",
+          "Estado",
+          "Objetivo",
+          "Âmbito",
+          "Processos Relacionados",
+          "Lista de Templates",
+          "Data Criação",
+          "Última Atualização"
+        ]
+      },
+      "mart": "mart_processos_resumo",
+      "destination_table": "Processos Resumo",
+      "primary_key": "ID Processo",
+      "checkpoint": "processos_resumo_checkpoint"
+    },
+    {
+      "source": {
+        "type": "airtable",
+        "name": "indicadores_eficacia",
+        "base_id": "apppOTLgiRO5kH4oA",
+        "table": "Indicadores Eficacia",
+        "fields": [
+          "Indicador_ID",
+          "ID Processo",
+          "Nº Processo",
+          "Nome do Processo",
+          "Indicador"
+        ]
+      },
+      "mart": "mart_indicadores_eficacia",
+      "destination_table": "Indicadores Eficacia",
+      "primary_key": "Indicador_ID",
+      "checkpoint": "indicadores_eficacia_checkpoint",
+      "foreign_keys": [
+        {
+          "name": "fk_indicadores_processo",
+          "columns": [
+            "ID Processo"
+          ],
+          "references": "Processos Resumo",
+          "ref_columns": [
+            "ID Processo"
+          ]
+        }
+      ]
+    },
+    {
+      "source": {
+        "type": "airtable",
+        "name": "fases",
+        "base_id": "apppOTLgiRO5kH4oA",
+        "table": "Fases",
+        "fields": [
+          "Fase_ID",
+          "ID Processo",
+          "Nº Processo",
+          "Nome do Processo",
+          "Nº Fase",
+          "Título",
+          "Descrição",
+          "Questões-Chave",
+          "Probabilidade",
+          "Fase Venda",
+          "Responsável",
+          "Participantes",
+          "Input",
+          "Output",
+          "Quando/Como",
+          "Destino",
+          "Documentos Suporte"
+        ]
+      },
+      "mart": "mart_fases",
+      "destination_table": "Fases",
+      "primary_key": "Fase_ID",
+      "checkpoint": "fases_checkpoint",
+      "unique": [
+        [
+          "ID Processo",
+          "Nº Fase"
+        ]
+      ],
+      "foreign_keys": [
+        {
+          "name": "fk_fases_processo",
+          "columns": [
+            "ID Processo"
+          ],
+          "references": "Processos Resumo",
+          "ref_columns": [
+            "ID Processo"
+          ]
+        }
+      ]
+    },
+    {
+      "source": {
+        "type": "airtable",
+        "name": "subseccoes_fases",
+        "base_id": "apppOTLgiRO5kH4oA",
+        "table": "Subseccoes Fases",
+        "fields": [
+          "Subseccao_ID",
+          "ID Processo",
+          "Nº Processo",
+          "Nome do Processo",
+          "Nº Fase",
+          "Título Fase",
+          "Subtítulo",
+          "Conteúdo"
+        ]
+      },
+      "mart": "mart_subseccoes_fases",
+      "destination_table": "Subseccoes Fases",
+      "primary_key": "Subseccao_ID",
+      "checkpoint": "subseccoes_fases_checkpoint",
+      "foreign_keys": [
+        {
+          "name": "fk_subseccoes_processo",
+          "columns": [
+            "ID Processo"
+          ],
+          "references": "Processos Resumo",
+          "ref_columns": [
+            "ID Processo"
+          ]
+        },
+        {
+          "name": "fk_subseccoes_fase",
+          "columns": [
+            "ID Processo",
+            "Nº Fase"
+          ],
+          "references": "Fases",
+          "ref_columns": [
+            "ID Processo",
+            "Nº Fase"
+          ]
+        }
+      ]
+    },
+    {
+      "source": {
+        "type": "airtable",
+        "name": "historico_versoes",
+        "base_id": "apppOTLgiRO5kH4oA",
+        "table": "Historico Versoes",
+        "fields": [
+          "Versao_ID",
+          "ID Processo",
+          "Nº Processo",
+          "Nome do Processo",
+          "Versão",
+          "Descrição",
+          "Data",
+          "Implicações"
+        ]
+      },
+      "mart": "mart_historico_versoes",
+      "destination_table": "Historico Versoes",
+      "primary_key": "Versao_ID",
+      "checkpoint": "historico_versoes_checkpoint",
+      "foreign_keys": [
+        {
+          "name": "fk_historico_processo",
+          "columns": [
+            "ID Processo"
+          ],
+          "references": "Processos Resumo",
+          "ref_columns": [
+            "ID Processo"
+          ]
+        }
+      ]
+    },
+    {
+      "source": {
+        "type": "airtable",
+        "name": "quadro_registos",
+        "base_id": "apppOTLgiRO5kH4oA",
+        "table": "Quadro Registos",
+        "fields": [
+          "Registo_ID",
+          "ID Processo",
+          "Nº Processo",
+          "Nome do Processo",
+          "Item",
+          "Local de Arquivo",
+          "Acesso Leitura",
+          "Acesso Atualização",
+          "Responsável (Owner)",
+          "Prazo de Retenção"
+        ]
+      },
+      "mart": "mart_quadro_registos",
+      "destination_table": "Quadro Registos",
+      "primary_key": "Registo_ID",
+      "checkpoint": "quadro_registos_checkpoint",
+      "foreign_keys": [
+        {
+          "name": "fk_quadro_processo",
+          "columns": [
+            "ID Processo"
+          ],
+          "references": "Processos Resumo",
+          "ref_columns": [
+            "ID Processo"
+          ]
+        }
+      ]
+    }
+  ],
+  "destination": {
+    "type": "postgres",
+    "dsn_env": "NEON_DATABASE_URL",
+    "batch_rows": 50
+  },
+  "_secrets_via_env": [
+    "AIRTABLE_API_KEY",
+    "NEON_DATABASE_URL"
+  ],
+  "_notas": "Espelho relacional da base Frameworks: campos link do Airtable NÃO são extraídos (fields[] explicito) — a integridade fica pelas chaves naturais + FKs adicionadas POS-MIGRACAO via extract/add_fks_neon.py (batch-run carrega por lotes e um lote filho pode referenciar linhas do pai de lote posterior). Ordem das tabelas: pai primeiro. Reutiliza os modelos dbt (stg/mart) e suites GE da migracao do zip. PK natural 'ID Processo' (texto hex) + PKs posicionais. UNIQUE composto (ID Processo, Nº Fase) em Fases para servir de alvo da FK das subseccoes. Upsert por PK — idempotente. Segredos NUNCA aqui."
+}

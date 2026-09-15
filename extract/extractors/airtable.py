@@ -39,9 +39,13 @@ class AirtableExtractor(BaseExtractor):
             raise ValueError("AIRTABLE_API_KEY em falta (variável de ambiente)")
         if not base_id or not table:
             raise ValueError("base_id e table são obrigatórios no bloco 'source'")
-        params = {"pageSize": min(page_size, self.MAX_PAGE)}
+        # 'fields' opcional: subconjunto explícito de colunas (útil para
+        # excluir campos link/lookup/attachment e manter o espelho limpo)
+        params = [("pageSize", min(page_size, self.MAX_PAGE))]
         if cursor:
-            params["offset"] = cursor
+            params.append(("offset", cursor))
+        for f in source_cfg.get("fields") or []:
+            params.append(("fields[]", f))
         resp = requests.get(
             f"{self.BASE_URL}/{base_id}/{table}",
             headers={"Authorization": f"Bearer {api_key}"},
@@ -65,6 +69,8 @@ class AirtableExtractor(BaseExtractor):
         base_id, table_id = source_cfg.get("base_id"), source_cfg.get("table")
         if not api_key or not base_id:
             return None
+        if source_cfg.get("fields"):
+            return list(source_cfg["fields"])
         try:
             resp = requests.get(
                 f"{self.BASE_URL}/meta/bases/{base_id}/tables",
@@ -79,8 +85,10 @@ class AirtableExtractor(BaseExtractor):
         return None
 
     def _fill_schema(self, df: pd.DataFrame, source_cfg: dict) -> pd.DataFrame:
-        """Reindexa o lote para o schema completo (colunas vazias -> NULL)."""
-        fields = self.schema(source_cfg)
+        """Reindexa o lote para o schema completo (colunas vazias -> NULL).
+        Com 'fields' explícito no source_cfg, usa essa lista (não chama a
+        metadata API)."""
+        fields = source_cfg.get("fields") or self.schema(source_cfg)
         if not fields or df.empty:
             return df
         meta = [c for c in df.columns if c.startswith("_airtable_")]

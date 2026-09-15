@@ -93,3 +93,13 @@ Uma entrada por linha, um relatório detalhado por execução nesta pasta.
 | 2026-09-12_0901 b02 | csv → airtable | {'raw_indicadores_eficacia': 50, 'raw_fases': 40, 'raw_subseccoes_fases': 26, 'raw_quadro_registos': 7} | ✅ +162 |
 | 2026-09-12_0901 b03 | csv → airtable | {'raw_indicadores_eficacia': 13} | ✅ +125 |
 | 2026-09-12_0901 SUM | csv → airtable (batch 50) | 3 lotes | ✅ 526 entregues (upsert) | cumulativo: {} |
+| 2026-09-15_2046 b01 | airtable → postgres | {'raw_processos_resumo': 16, 'raw_indicadores_eficacia': 50, 'raw_fases': 50, 'raw_subseccoes_fases': 50, 'raw_historico_versoes': 26, 'raw_quadro_registos': 37} | ✅ +229 |
+| 2026-09-15_2046 b02 | airtable → postgres | {'raw_indicadores_eficacia': 12, 'raw_fases': 36, 'raw_subseccoes_fases': 50} | ✅ +177 |
+| 2026-09-15_2046 b03 | airtable → postgres | {'raw_subseccoes_fases': 50} | ✅ +177 |
+| 2026-09-15_2046 b04 | airtable → postgres | {'raw_subseccoes_fases': 26} | ✅ +153 |
+| 2026-09-15_2046 SUM | airtable → postgres (batch 50) | 4 lotes | ✅ 736 entregues (upsert) | cumulativo: {} |
+| 2026-09-15_2047 b01 | airtable → postgres | {'raw_processos_resumo': 16, 'raw_indicadores_eficacia': 50, 'raw_fases': 50, 'raw_subseccoes_fases': 50, 'raw_historico_versoes': 26, 'raw_quadro_registos': 37} | ✅ +229 |
+| 2026-09-15_2047 b02 | airtable → postgres | {'raw_indicadores_eficacia': 12, 'raw_fases': 36, 'raw_subseccoes_fases': 50} | ✅ +177 |
+| 2026-09-15_2047 b03 | airtable → postgres | {'raw_subseccoes_fases': 50} | ✅ +177 |
+| 2026-09-15_2047 b04 | airtable → postgres | {'raw_subseccoes_fases': 26} | ✅ +153 |
+| 2026-09-15_2047 SUM | airtable → postgres (batch 50) | 4 lotes | ✅ 736 entregues (upsert) | cumulativo: {} |
