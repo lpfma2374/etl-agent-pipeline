@@ -1,0 +1,60 @@
+{
+ "data_asset_type": null,
+ "expectation_suite_name": "prospetos_suite",
+ "expectations": [
+  {
+   "expectation_type": "expect_table_columns_to_match_ordered_list",
+   "kwargs": {
+    "column_list": [
+     "Prospeto_ID",
+     "Nome do jogador",
+     "Nacionalidade",
+     "Idade",
+     "Posição",
+     "Clube atual",
+     "Liga onde atua",
+     "Valor atual de mercado",
+     "Valor potencial",
+     "Principais dados de desempenho (últimos 3 anos)",
+     "Agente",
+     "Contrato atual",
+     "Vencimento atual"
+    ]
+   },
+   "meta": {
+    "notes": "Schema espelho do Excel radar_de_alas.xlsx (prospetos)"
+   }
+  },
+  {
+   "expectation_type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "Prospeto_ID"
+   },
+   "meta": {
+    "notes": "PK posicional obrigatória"
+   }
+  },
+  {
+   "expectation_type": "expect_column_values_to_be_unique",
+   "kwargs": {
+    "column": "Prospeto_ID"
+   },
+   "meta": {
+    "notes": "PK posicional única"
+   }
+  },
+  {
+   "expectation_type": "expect_table_row_count_to_be_between",
+   "kwargs": {
+    "min_value": 1,
+    "max_value": 50
+   },
+   "meta": {
+    "notes": "Volume sanity (lote máx. 50)"
+   }
+  }
+ ],
+ "meta": {
+  "great_expectations_version": "0.18.x"
+ }
+}

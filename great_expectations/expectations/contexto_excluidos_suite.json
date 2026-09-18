@@ -1,0 +1,53 @@
+{
+ "data_asset_type": null,
+ "expectation_suite_name": "contexto_excluidos_suite",
+ "expectations": [
+  {
+   "expectation_type": "expect_table_columns_to_match_ordered_list",
+   "kwargs": {
+    "column_list": [
+     "Excluido_ID",
+     "Nome",
+     "Idade",
+     "Posição",
+     "Clube / Liga",
+     "Motivo da exclusão"
+    ]
+   },
+   "meta": {
+    "notes": "Schema espelho do Excel radar_de_alas.xlsx (contexto_excluidos)"
+   }
+  },
+  {
+   "expectation_type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "Excluido_ID"
+   },
+   "meta": {
+    "notes": "PK posicional obrigatória"
+   }
+  },
+  {
+   "expectation_type": "expect_column_values_to_be_unique",
+   "kwargs": {
+    "column": "Excluido_ID"
+   },
+   "meta": {
+    "notes": "PK posicional única"
+   }
+  },
+  {
+   "expectation_type": "expect_table_row_count_to_be_between",
+   "kwargs": {
+    "min_value": 1,
+    "max_value": 50
+   },
+   "meta": {
+    "notes": "Volume sanity (lote máx. 50)"
+   }
+  }
+ ],
+ "meta": {
+  "great_expectations_version": "0.18.x"
+ }
+}

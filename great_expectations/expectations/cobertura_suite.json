@@ -1,0 +1,52 @@
+{
+ "data_asset_type": null,
+ "expectation_suite_name": "cobertura_suite",
+ "expectations": [
+  {
+   "expectation_type": "expect_table_columns_to_match_ordered_list",
+   "kwargs": {
+    "column_list": [
+     "Cobertura_ID",
+     "País",
+     "Competição",
+     "Estado",
+     "Nota"
+    ]
+   },
+   "meta": {
+    "notes": "Schema espelho do Excel radar_de_alas.xlsx (cobertura)"
+   }
+  },
+  {
+   "expectation_type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "Cobertura_ID"
+   },
+   "meta": {
+    "notes": "PK posicional obrigatória"
+   }
+  },
+  {
+   "expectation_type": "expect_column_values_to_be_unique",
+   "kwargs": {
+    "column": "Cobertura_ID"
+   },
+   "meta": {
+    "notes": "PK posicional única"
+   }
+  },
+  {
+   "expectation_type": "expect_table_row_count_to_be_between",
+   "kwargs": {
+    "min_value": 1,
+    "max_value": 50
+   },
+   "meta": {
+    "notes": "Volume sanity (lote máx. 50)"
+   }
+  }
+ ],
+ "meta": {
+  "great_expectations_version": "0.18.x"
+ }
+}

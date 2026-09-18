@@ -14,3 +14,7 @@ sources:
       - name: raw_subseccoes_fases
       - name: raw_historico_versoes
       - name: raw_quadro_registos
+      - name: raw_prospetos
+      - name: raw_contexto_excluidos
+      - name: raw_cobertura
+      - name: raw_metodologia

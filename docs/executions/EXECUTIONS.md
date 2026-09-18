@@ -105,3 +105,12 @@ Uma entrada por linha, um relatório detalhado por execução nesta pasta.
 | 2026-09-15_2047 SUM | airtable → postgres (batch 50) | 4 lotes | ✅ 736 entregues (upsert) | cumulativo: {} |
 
 | 2026-09-18 15:40 | Novo ETL (wizard) | radar-de-alas.xlsx -> Airtable Scout_Radar/scout | 1 | 3 | success |
+| 2026-09-18_1727 b01 | excel → airtable | {'raw_prospetos': 3, 'raw_contexto_excluidos': 3, 'raw_cobertura': 10, 'raw_metodologia': 7} | ✅ +23 |
+| 2026-09-18_1727 SUM | excel → airtable (batch 50) | 1 lotes | ✅ 23 entregues (upsert) | cumulativo: {} |
+| 2026-09-18_1729 b01 | excel → airtable | {'raw_prospetos': 3, 'raw_contexto_excluidos': 3, 'raw_cobertura': 10, 'raw_metodologia': 7} | ✅ +23 |
+| 2026-09-18_1729 SUM | excel → airtable (batch 50) | 1 lotes | ✅ 23 entregues (upsert) | cumulativo: {} |
+| 2026-09-18_1730 b01 | excel → airtable | {'raw_prospetos': 3, 'raw_contexto_excluidos': 3, 'raw_cobertura': 10, 'raw_metodologia': 7} | ✅ +23 |
+| 2026-09-18_1730 SUM | excel → airtable (batch 50) | 1 lotes | ✅ 23 entregues (upsert) | cumulativo: {} |
+| 2026-09-18_1730 b01 | excel → airtable | {'raw_prospetos': 3, 'raw_contexto_excluidos': 3, 'raw_cobertura': 10, 'raw_metodologia': 7} | ✅ +23 |
+| 2026-09-18_1730 SUM | excel → airtable (batch 50) | 1 lotes | ✅ 23 entregues (upsert) | cumulativo: {} |
+| 2026-09-18 17:30 | radar_de_alas.xlsx → Airtable 'Teste ETL' (4 tabelas) | 23 | 1 lote | ✅ GE 4/4, idempotente |

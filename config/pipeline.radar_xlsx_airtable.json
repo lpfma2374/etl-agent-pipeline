@@ -1,0 +1,75 @@
+{
+  "name": "Excel radar_de_alas.xlsx (4 sheets) -> Airtable (nova base 'Teste ETL', 4 tabelas)",
+  "tables": [
+    {
+      "source": {
+        "type": "excel",
+        "name": "prospetos",
+        "path": "data/radar_de_alas.xlsx",
+        "sheet": "Prospetos",
+        "skiprows": 3,
+        "positional_pk": "Prospeto_ID",
+        "_nota": "skiprows 3 descarta título, descrição e linha vazia; linha seguinte é o cabeçalho"
+      },
+      "mart": "mart_prospetos",
+      "destination_table": "Prospetos",
+      "primary_key": "Prospeto_ID",
+      "checkpoint": "prospetos_checkpoint"
+    },
+    {
+      "source": {
+        "type": "excel",
+        "name": "contexto_excluidos",
+        "path": "data/radar_de_alas.xlsx",
+        "sheet": "Contexto (excluídos)",
+        "skiprows": 2,
+        "positional_pk": "Excluido_ID"
+      },
+      "mart": "mart_contexto_excluidos",
+      "destination_table": "Contexto (excluídos)",
+      "primary_key": "Excluido_ID",
+      "checkpoint": "contexto_excluidos_checkpoint"
+    },
+    {
+      "source": {
+        "type": "excel",
+        "name": "cobertura",
+        "path": "data/radar_de_alas.xlsx",
+        "sheet": "Cobertura",
+        "skiprows": 2,
+        "positional_pk": "Cobertura_ID"
+      },
+      "mart": "mart_cobertura",
+      "destination_table": "Cobertura",
+      "primary_key": "Cobertura_ID",
+      "checkpoint": "cobertura_checkpoint"
+    },
+    {
+      "source": {
+        "type": "excel",
+        "name": "metodologia",
+        "path": "data/radar_de_alas.xlsx",
+        "sheet": "Metodologia e lacunas",
+        "skiprows": 2,
+        "headers": [
+          "Tema",
+          "Descrição"
+        ],
+        "positional_pk": "Metodologia_ID",
+        "_nota": "sheet SEM linha de cabeçalho — nomes atribuídos via 'headers'"
+      },
+      "mart": "mart_metodologia",
+      "destination_table": "Metodologia e lacunas",
+      "primary_key": "Metodologia_ID",
+      "checkpoint": "metodologia_checkpoint"
+    }
+  ],
+  "destination": {
+    "type": "airtable",
+    "base_id": "appoxVujvUYs123Dr"
+  },
+  "_secrets_via_env": [
+    "AIRTABLE_API_KEY"
+  ],
+  "_notas": "Base 'Teste ETL' (appoxVujvUYs123Dr) criada via API (workspace wspjH5AkyLLP6J7Xv), tabela 'Prospetos' pré-criada tipada (a Web API da Airtable não permite apagar tabelas, por isso a 1ª tabela é criada no POST /meta/bases); as restantes 3 cria o loader. Upsert posicional idempotente. 23 registos (1 lote). Segredos NUNCA aqui."
+}
