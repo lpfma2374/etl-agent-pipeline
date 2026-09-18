@@ -54,7 +54,7 @@ async function loadStaging(requestId) {
     FROM information_schema.columns WHERE table_name = 'staging'`)).toArray()
     .map((r) => ({ name: r.column_name, type: r.data_type }));
   const [{ n }] = (await c.query("SELECT COUNT(*) n FROM staging")).toArray();
-  analyticsData = { rows: Number(n), columns: cols.map(classify) };
+  analyticsData = { rows: Number(n), columns: cols.map(classify), truncated };
   return analyticsData;
 }
 
@@ -224,7 +224,7 @@ async function openAnalytics(requestId) {
     await loadStaging(requestId);
     const p = await profile();
     $("#an-status").textContent = `${analyticsData.rows} linhas · ${analyticsData.columns.length} colunas · perfil gerado`
-      + (truncated ? " · amostra (cap 50k linhas)" : "");
+      + (analyticsData.truncated ? " · amostra (cap 50k linhas)" : "");
     renderOverview(p);
     await renderCharts(p);
   } catch (e) {
