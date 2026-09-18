@@ -16,7 +16,6 @@
       <a href="#cascade">Cascade</a>
       <a href="#execucoes">Execuções</a>
       <a href="https://github.com/lpfma2374/etl-agent-pipeline" target="_blank" rel="noopener">GitHub</a>
-      <button id="btn-new-etl" class="cta-pill">Novo ETL</button>
       <span id="last-updated">a carregar…</span>
       <button id="btn-refresh" title="Atualizar agora">Atualizar</button>
     </div>
@@ -101,125 +100,6 @@
   </div>
 </div>
 
-<!-- ============ Novo ETL — wizard ============ -->
-<div id="etl-modal" class="modal hidden">
-  <div class="modal-card etl-wizard">
-    <div class="modal-head">
-      <h3>Novo ETL</h3>
-      <button id="etl-close">✕</button>
-    </div>
-
-    <!-- Passo 1: ORIGEM + DESTINO -->
-    <div id="etl-step1" class="etl-step">
-      <div class="etl-section-title">Origem</div>
-      <div class="etl-origin-toggle">
-        <button type="button" id="etl-origin-file" class="etl-origin-btn active">Ficheiro CSV / Excel</button>
-        <button type="button" id="etl-origin-sheets" class="etl-origin-btn">Google Sheets</button>
-      </div>
-      <label id="etl-file-zone" class="etl-file-zone">
-        <input type="file" id="etl-file" accept=".csv,.xlsx,.xls" hidden>
-        <span id="etl-file-label">Clique para escolher um ficheiro .csv, .xlsx ou .xls (máx. 10 MB)</span>
-      </label>
-      <div id="etl-sheets-row" class="etl-sheets-row hidden">
-        <input type="url" id="etl-sheet-url" placeholder="https://docs.google.com/spreadsheets/…">
-      </div>
-
-      <div class="etl-section-title">Destino</div>
-      <div class="etl-dest-row">
-        <select id="etl-destination">
-          <option value="">Escolha o destino…</option>
-          <option value="airtable">Airtable (nova base)</option>
-          <option value="d1">Cloudflare D1 (nova database)</option>
-          <option value="neon">Neon PostgreSQL (tabela)</option>
-        </select>
-        <div class="hint">O pipeline valida os dados (Great Expectations) antes de carregar — nunca carrega se a validação falhar.</div>
-      </div>
-
-      <div id="etl-step1-error" class="etl-error hidden"></div>
-      <button id="etl-extract-btn" class="cta-pill etl-primary">Extrair para staging (DuckDB)</button>
-      <div id="etl-resume-row" class="hidden" style="margin-top:14px;font-size:14px;color:#6e6e73">
-        Tens um pedido em curso. <a href="#" id="etl-resume-btn" style="color:#0071e3">Retomar acompanhamento</a>
-      </div>
-    </div>
-
-    <!-- Passo 2: TRANSFORMAÇÃO -->
-    <div id="etl-step2" class="etl-step hidden">
-      <div class="etl-progress" id="etl-progress-1">
-        <span class="spinner"></span>
-        <div>
-          <div class="etl-progress-title">A extrair para a staging do DuckDB…</div>
-          <div class="muted">O agente está a ler a origem e a preparar os dados. Pode demorar alguns minutos.</div>
-        </div>
-      </div>
-
-      <div id="etl-data-view" class="hidden">
-        <div class="etl-section-title-row">
-          <span class="etl-section-title">Dados extraídos <span id="etl-data-count" class="etl-count-badge"></span></span>
-          <button id="etl-analytics-btn" class="cta-pill hidden">Analytics</button>
-        </div>
-        <p class="hint">Dados de leitura — não é possível editar, remover ou apagar registos aqui. As alterações passam por transformações dbt.</p>
-        <div id="etl-data-meta" class="etl-data-meta"></div>
-        <div class="table-wrap etl-preview-wrap">
-          <table id="etl-preview-tbl"></table>
-        </div>
-
-        <div class="etl-section-title">Transformação</div>
-        <p class="hint">Descreve as transformações que queres executar nos dados (ex.: remover duplicados, normalizar datas, filtrar linhas, renomear colunas, criar campos calculados…). O agente implementa-as como modelos dbt com o destino escolhido como referência.</p>
-        <textarea id="etl-notes" rows="4" placeholder="Ex.: remover linhas com preço vazio; converter a coluna data para AAAA-MM-DD; criar a coluna total = preço × quantidade…"></textarea>
-        <div id="etl-step2-error" class="etl-error hidden"></div>
-        <button id="etl-transform-btn" class="cta-pill etl-primary">Executar transformações e exportar</button>
-      </div>
-
-      <div id="etl-analytics-view" class="hidden">
-        <div class="etl-an-head">
-          <button id="etl-analytics-back" class="etl-ghost-btn">&larr; Voltar aos dados</button>
-          <span id="an-status" class="muted">—</span>
-        </div>
-        <div class="an-overview" id="an-overview"></div>
-        <div class="an-grid" id="an-grid"></div>
-        <div class="an-explore">
-          <div class="etl-section-title">Explorar com SQL (DuckDB no browser)</div>
-          <p class="hint">Consulta ao vivo sobre a tabela <code>staging</code>. Máx. 200 linhas devolvidas.</p>
-          <textarea id="an-sql" rows="2" placeholder="SELECT produto, COUNT(*) AS n FROM staging GROUP BY 1 ORDER BY n DESC"></textarea>
-          <button id="an-sql-run" class="cta-pill etl-primary">Executar SQL</button>
-          <div id="an-explore-out"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Passo 3: EXPORTAÇÃO -->
-    <div id="etl-step3" class="etl-step hidden">
-      <div class="etl-progress" id="etl-progress-2">
-        <span class="spinner"></span>
-        <div>
-          <div class="etl-progress-title">A transformar (dbt) e a carregar para o destino…</div>
-          <div class="muted">Transformações dbt → validação Great Expectations → load incremental por lotes de 50.</div>
-        </div>
-      </div>
-
-      <div id="etl-result-view" class="hidden">
-        <div class="etl-section-title">Exportação concluída</div>
-        <div id="etl-result-body"></div>
-        <div class="etl-wizard-actions">
-          <button id="etl-view-execs" class="cta-pill etl-primary">Ver execuções</button>
-          <button id="etl-done" class="etl-ghost-btn">Fechar</button>
-        </div>
-      </div>
-
-      <div id="etl-fail-view" class="hidden">
-        <div class="etl-section-title fail">Falhou</div>
-        <div id="etl-fail-body" class="etl-error"></div>
-        <div class="etl-wizard-actions">
-          <button id="etl-done-2" class="etl-ghost-btn">Fechar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script src="app.js"></script>
-<script src="etl.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
-<script type="module" src="analytics.js"></script>
 </body>
 </html>
