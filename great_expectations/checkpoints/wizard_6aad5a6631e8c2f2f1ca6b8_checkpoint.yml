@@ -6,7 +6,7 @@ expectation_suite_name: wizard_6aad5a6631e8c2f2f1ca6b8_suite
 batch_request:
   datasource_name: marts_datasource
   data_connector_name: default_inferred_data_connector_name
-  data_asset_name: mart_wizard_6aad5a6631e8c2f2f1ca6b8
+  data_asset_name: mart_radar_de_alas
 action_list:
   - name: store_validation_result
     action:

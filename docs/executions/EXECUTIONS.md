@@ -103,3 +103,5 @@ Uma entrada por linha, um relatório detalhado por execução nesta pasta.
 | 2026-09-15_2047 b03 | airtable → postgres | {'raw_subseccoes_fases': 50} | ✅ +177 |
 | 2026-09-15_2047 b04 | airtable → postgres | {'raw_subseccoes_fases': 26} | ✅ +153 |
 | 2026-09-15_2047 SUM | airtable → postgres (batch 50) | 4 lotes | ✅ 736 entregues (upsert) | cumulativo: {} |
+
+| 2026-09-18 15:40 | Novo ETL (wizard) | radar-de-alas.xlsx -> Airtable Scout_Radar/scout | 1 | 3 | success |
