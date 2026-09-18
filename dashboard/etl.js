@@ -16,8 +16,13 @@ const $$ = (s) => document.querySelector(s);
 
 /* ---------- abrir/fechar ---------- */
 function etlOpen() {
-  ETLM.id = null; ETLM.stage = 1; ETLM.originMode = "file";
+  ETLM.stage = 1; ETLM.originMode = "file";
   etlShowStep(1);
+  const lastId = localStorage.getItem("etl_request_id");
+  if (lastId && $$("#etl-resume-row")) {
+    $$("#etl-resume-row").classList.remove("hidden");
+    $$("#etl-resume-btn").onclick = () => resumeRequest(lastId);
+  }
   $$("#etl-file").value = "";
   $$("#etl-file-label").textContent = "Clique para escolher um ficheiro .csv, .xlsx ou .xls (máx. 10 MB)";
   $$("#etl-sheet-url").value = "";
@@ -73,6 +78,7 @@ async function submitIntake() {
     const body = await r.json();
     if (!r.ok || !body.ok) throw new Error(body.error || `HTTP ${r.status}`);
     ETLM.id = body.id;
+    localStorage.setItem("etl_request_id", ETLM.id);
     etlShowStep(2);
     startPolling();
   } catch (e) {
@@ -82,6 +88,12 @@ async function submitIntake() {
   }
 }
 function etlFail1(msg) { const e = $$("#etl-step1-error"); e.textContent = msg; e.classList.remove("hidden"); }
+
+function resumeRequest(id) {
+  ETLM.id = id;
+  etlShowStep(2);
+  startPolling();
+}
 
 /* ---------- polling ---------- */
 function startPolling() {
