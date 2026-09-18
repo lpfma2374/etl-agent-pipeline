@@ -68,9 +68,13 @@ def main() -> int:
     con.execute("CREATE TABLE stg.raw_data AS SELECT * FROM df_view")
     con.unregister("df_view")
     count = con.execute("SELECT COUNT(*) FROM stg.raw_data").fetchone()[0]
-    # export parquet para o botão Analytics (DuckDB-WASM no browser)
+    # export parquet para o botão Analytics (DuckDB-WASM no browser).
+    # Cap de 50k linhas: o parquet viaja em base64 no preview_json do EtlRequest
+    # (o storage bloqueia fetches server-side), e o perfil Analytics é amostral
+    # acima desse volume.
     parquet = os.path.join(workdir, "staging.parquet")
-    con.execute(f"COPY (SELECT * FROM stg.raw_data) TO '{parquet}' (FORMAT PARQUET)")
+    con.execute(
+        f"COPY (SELECT * FROM stg.raw_data LIMIT 50000) TO '{parquet}' (FORMAT PARQUET)")
     con.close()
 
     sample = json.loads(df.head(50).to_json(orient="records", force_ascii=False))

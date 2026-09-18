@@ -1,10 +1,10 @@
-/* API /api/etl-analytics — proxy do wizard 'Novo ETL'.
- * POST { id } → lê o pedido no backend (etlRequestStatus), obtém o
- * analytics.parquet_url dos dados de staging e devolve o parquet
- * same-origin (o URL de storage nunca chega ao browser).
+/* API /api/etl-analytics — proxy do wizard 'Novo ETL' para o backend function
+ * etlAnalyticsFile (Base44). POST { id } → bytes do parquet de staging,
+ * same-origin (o parquet viaja no EtlRequest; nenhum URL de storage chega
+ * ao browser).
  */
 
-const UPSTREAM = "https://superagent-33c6e8f8.base44.app/functions/etlRequestStatus";
+const UPSTREAM = "https://superagent-33c6e8f8.base44.app/functions/etlAnalyticsFile";
 
 module.exports = async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -17,28 +17,23 @@ module.exports = async (req, res) => {
   if (!token) return res.status(503).json({ ok: false, error: "ETL_INTAKE_TOKEN não configurado" });
 
   try {
-    const id = (req.body || {}).id;
-    if (!id) return res.status(400).json({ ok: false, error: "id em falta" });
-
-    const st = await fetch(UPSTREAM, {
+    const upstream = await fetch(UPSTREAM, {
       method: "POST",
       headers: { "Content-Type": "application/json", "x-etl-token": token },
-      body: JSON.stringify({ id }),
+      body: JSON.stringify(req.body || {}),
     });
-    const info = await st.json();
-    if (!st.ok || !info.ok) {
-      return res.status(st.status || 502).json({ ok: false, error: info.error || "pedido não encontrado" });
+    if (!upstream.ok) {
+      const text = await upstream.text();
+      let msg = `upstream ${upstream.status}`;
+      try { msg = JSON.parse(text).error || msg; } catch { /* binário */ }
+      return res.status(upstream.status).json({ ok: false, error: msg });
     }
-    const url = info.preview?.analytics?.parquet_url;
-    if (!url) {
-      return res.status(404).json({ ok: false, error: "analytics indisponível para este pedido" });
+    const buf = Buffer.from(await upstream.arrayBuffer());
+    if (upstream.headers.get("x-analytics-truncated") === "1") {
+      res.setHeader("X-Analytics-Truncated", "1");
     }
-    const pq = await fetch(url);
-    if (!pq.ok) return res.status(502).json({ ok: false, error: `storage ${pq.status}` });
-
-    const buf = Buffer.from(await pq.arrayBuffer());
     res.setHeader("Content-Type", "application/octet-stream");
-    res.setHeader("Content-Disposition", 'inline; filename="staging.parquet"');
+    res.setHeader("Content-Length", buf.length);
     return res.send(buf);
   } catch (e) {
     return res.status(502).json({ ok: false, error: e?.message || "proxy falhou" });

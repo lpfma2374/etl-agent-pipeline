@@ -140,8 +140,7 @@ function renderPreview(s) {
     return;
   }
   $$("#etl-data-count").textContent = `${p.row_count ?? "?"} registos · ${p.columns.length} colunas`;
-  $$("#etl-analytics-btn").classList.toggle(
-    "hidden", !(p.analytics && p.analytics.parquet_url));
+  $$("#etl-analytics-btn").classList.toggle("hidden", !(p && p.analytics));
   $$("#etl-data-meta").innerHTML =
     (p.columns || []).map((c) =>
       `<span class="etl-chip">${esc2(c.name)} <em>${esc2(c.dtype || "")}</em></span>`).join("");

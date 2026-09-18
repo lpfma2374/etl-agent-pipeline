@@ -37,6 +37,7 @@ async function loadStaging(requestId) {
     try { msg = (await r.json()).error || msg; } catch { /* binário */ }
     throw new Error(msg);
   }
+  const truncated = r.headers.get("x-analytics-truncated") === "1";
   const buf = new Uint8Array(await r.arrayBuffer());
   await c.registerFileBuffer("staging.parquet", buf);
   await c.send("CREATE OR REPLACE TABLE staging AS SELECT * FROM read_parquet('staging.parquet')");
@@ -214,7 +215,8 @@ async function openAnalytics(requestId) {
   try {
     await loadStaging(requestId);
     const p = await profile();
-    $("#an-status").textContent = `${analyticsData.rows} linhas · ${analyticsData.columns.length} colunas · perfil gerado`;
+    $("#an-status").textContent = `${analyticsData.rows} linhas · ${analyticsData.columns.length} colunas · perfil gerado`
+      + (truncated ? " · amostra (cap 50k linhas)" : "");
     renderOverview(p);
     await renderCharts(p);
   } catch (e) {
