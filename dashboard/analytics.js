@@ -5,6 +5,7 @@
  */
 import * as duckdb from "https://esm.sh/@duckdb/duckdb-wasm@1.29.0";
 
+let ddb = null;         // AsyncDuckDB (motor)
 let db = null;          // AsyncDuckDBConnection
 let analyticsData = null; // { rows, columns: [{name, type, kind}] }
 const charts = [];
@@ -26,6 +27,7 @@ async function initDuckDB() {
   const logger = new duckdb.ConsoleLogger(duckdb.LogLevel.WARNING);
   const dd = new duckdb.AsyncDuckDB(logger, worker);
   await dd.instantiate(bundle.mainModule, bundle.pthreadWorker);
+  ddb = dd;                     // registerFileBuffer pertence ao motor (1.29)
   db = await dd.connect();
   return db;
 }
@@ -45,7 +47,7 @@ async function loadStaging(requestId) {
   }
   const truncated = r.headers.get("x-analytics-truncated") === "1";
   const buf = new Uint8Array(await r.arrayBuffer());
-  await c.registerFileBuffer("staging.parquet", buf);
+  await ddb.registerFileBuffer("staging.parquet", buf);
   await c.send("CREATE OR REPLACE TABLE staging AS SELECT * FROM read_parquet('staging.parquet')");
   const cols = (await c.query(`
     SELECT column_name, data_type
