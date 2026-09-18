@@ -16,7 +16,13 @@ async function initDuckDB() {
   if (db) return db;
   const bundles = duckdb.getJsDelivrBundles();
   const bundle = await duckdb.selectBundle(bundles);
-  const worker = new Worker(bundle.mainWorker);
+  // Worker cross-origin (jsdelivr) é bloqueado pelo browser — blob same-origin
+  // com importScripts é o workaround padrão para bundles clássicos (eh/mvp).
+  const blob = new Blob(
+    [`importScripts(${JSON.stringify(bundle.mainWorker)});`],
+    { type: "text/javascript" }
+  );
+  const worker = new Worker(URL.createObjectURL(blob));
   const logger = new duckdb.ConsoleLogger(duckdb.LogLevel.WARNING);
   const dd = new duckdb.AsyncDuckDB(logger, worker);
   await dd.instantiate(bundle.mainModule, bundle.pthreadWorker);
