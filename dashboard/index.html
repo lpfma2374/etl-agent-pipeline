@@ -1,79 +1,89 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-PT">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ETL Pipeline — Estado das Execuções</title>
+<meta name="description" content="Estado das execuções do pipeline ETL — extract, transform, validate, load, report.">
+<title>ETL Pipeline — Execuções</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <div>
-    <h1>ETL Pipeline <span class="accent">— Estado das Execuções</span></h1>
-    <p class="sub">DuckDB · dbt-core · Great Expectations · GitHub Actions · dados em direto do registo D1</p>
+
+<nav>
+  <div class="nav-inner">
+    <span class="brand"><a href="/">ETL Pipeline</a></span>
+    <div class="links">
+      <a href="#cascade">Cascade</a>
+      <a href="#execucoes">Execuções</a>
+      <a href="https://github.com/lpfma2374/etl-agent-pipeline" target="_blank" rel="noopener">GitHub</a>
+      <span id="last-updated">a carregar…</span>
+      <button id="btn-refresh" title="Atualizar agora">Atualizar</button>
+    </div>
   </div>
-  <div class="refresh">
-    <span id="last-updated">a carregar…</span>
-    <button id="btn-refresh" title="Atualizar agora">↻ atualizar</button>
-  </div>
+</nav>
+
+<header class="hero">
+  <h1>Cada execução, <span class="hl">à vista.</span></h1>
+  <p class="sub">O histórico completo do pipeline ETL — gates, durações e falhas de cada run, em direto.</p>
+  <p class="tech">DuckDB · dbt-core · Great Expectations · GitHub Actions · dados em direto do registo D1</p>
 </header>
 
-<section class="stats">
-  <div class="stat-card">
-    <span class="stat-label">Total de execuções</span>
-    <span class="stat-value" id="stat-total">—</span>
-    <span class="stat-foot" id="stat-total-foot">&nbsp;</span>
-  </div>
-  <div class="stat-card">
-    <span class="stat-label">Erros críticos</span>
-    <span class="stat-value danger" id="stat-errors">—</span>
-    <span class="stat-foot" id="stat-errors-foot">&nbsp;</span>
-  </div>
-  <div class="stat-card">
-    <span class="stat-label">Duração média pós-commit</span>
-    <span class="stat-value" id="stat-avg">—</span>
-    <span class="stat-foot" id="stat-avg-foot">&nbsp;</span>
-  </div>
-  <div class="stat-card">
-    <span class="stat-label">Taxa de sucesso</span>
-    <span class="stat-value ok" id="stat-rate">—</span>
-    <span class="stat-foot" id="stat-rate-foot">&nbsp;</span>
-  </div>
-</section>
+<main>
+  <section class="stats">
+    <div class="stat-card">
+      <span class="stat-label">Total de execuções</span>
+      <span class="stat-value" id="stat-total">—</span>
+      <span class="stat-foot" id="stat-total-foot">&nbsp;</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Erros críticos</span>
+      <span class="stat-value danger" id="stat-errors">—</span>
+      <span class="stat-foot" id="stat-errors-foot">&nbsp;</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Duração média</span>
+      <span class="stat-value" id="stat-avg">—</span>
+      <span class="stat-foot" id="stat-avg-foot">&nbsp;</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Taxa de sucesso</span>
+      <span class="stat-value ok" id="stat-rate">—</span>
+      <span class="stat-foot" id="stat-rate-foot">&nbsp;</span>
+    </div>
+  </section>
 
-<section class="card swimlane-card">
-  <div class="card-head">
-    <h2>Cascade do pipeline ETL</h2>
-    <div id="swimlane-meta" class="muted">a carregar…</div>
-  </div>
-  <div id="swimlane" class="swimlane">
-    <div class="muted">a carregar a cascade…</div>
-  </div>
-  <div class="legend">
-    <span><i class="dot ok"></i> sucesso</span>
-    <span><i class="dot fail"></i> falha</span>
-    <span><i class="dot cancel"></i> cancelado</span>
-    <span><i class="dot skip"></i> skipped</span>
-  </div>
-</section>
+  <section id="cascade" class="card">
+    <div class="card-head">
+      <h2>Cascade do pipeline</h2>
+      <div id="swimlane-meta" class="ctx">a carregar…</div>
+    </div>
+    <div id="swimlane" class="swimlane">
+      <div class="muted">a carregar a cascade…</div>
+    </div>
+    <div class="legend">
+      <span><i class="dot ok"></i> sucesso</span>
+      <span><i class="dot fail"></i> falha</span>
+      <span><i class="dot cancel"></i> cancelado</span>
+      <span><i class="dot skip"></i> skipped</span>
+    </div>
+  </section>
 
-<section class="card">
-  <div class="card-head">
+  <section id="execucoes">
     <h2>Execuções</h2>
-    <div class="muted" id="table-count"></div>
-  </div>
-  <div class="table-wrap">
-    <table id="tbl">
-      <thead>
-        <tr>
-          <th>Data</th><th>Workflow</th><th>Commit</th><th>Duração</th>
-          <th>Erros</th><th>Status</th><th></th>
-        </tr>
-      </thead>
-      <tbody id="tbody"><tr><td colspan="7" class="muted">a carregar…</td></tr></tbody>
-    </table>
-  </div>
-</section>
+    <p class="ctx" id="table-count"></p>
+    <div class="table-wrap">
+      <table id="tbl">
+        <thead>
+          <tr>
+            <th>Data</th><th>Workflow</th><th>Commit</th><th>Duração</th>
+            <th>Erros</th><th>Status</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"><tr><td colspan="7" class="muted">a carregar…</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+</main>
 
 <footer>
   ETL_Agent (Base44 Superagent) · atualiza automaticamente a cada 90s ·
