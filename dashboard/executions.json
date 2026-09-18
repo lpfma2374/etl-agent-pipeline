@@ -1,0 +1,1693 @@
+{
+ "executions": [
+  {
+   "run_id": "35338634797",
+   "workflow": "CI",
+   "run_number": 15,
+   "event": "push",
+   "head_sha": "88caee4",
+   "commit_message": "fix: registo de execuções via listener workflow_run (estado final, não in_progress)",
+   "status": "success",
+   "duration_seconds": 73,
+   "run_started_at": "2026-09-18T11:14:19Z",
+   "updated_at": "2026-09-18T11:15:32Z",
+   "html_url": "https://github.com/lpfma2374/etl-agent-pipeline/actions/runs/35338634797",
+   "gates": [
+    {
+     "step": "Set up job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 2.0
+    },
+    {
+     "step": "Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 3.0
+    },
+    {
+     "step": "Instalar dependências",
+     "gate": "Setup",
+     "tool": "pip install",
+     "status": "success",
+     "seconds": 36.0
+    },
+    {
+     "step": "Lint",
+     "gate": "Lint",
+     "tool": "ruff",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Gerar dados sintéticos (seed, 200 registos -> 4 lotes)",
+     "gate": "Seed",
+     "tool": "make_seed.py (dados sintéticos)",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Batch-run: pipeline completo por lotes de 50 (extract -> dbt -> GE -> load -> report)",
+     "gate": "Pipeline completo",
+     "tool": "run_batches.py (extract→dbt→GE→load→report)",
+     "status": "success",
+     "seconds": 20.0
+    },
+    {
+     "step": "dbt docs (catálogo)",
+     "gate": "dbt docs",
+     "tool": "dbt-core",
+     "status": "success",
+     "seconds": 3.0
+    },
+    {
+     "step": "Run actions/upload-artifact@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 2.0
+    },
+    {
+     "step": "Post Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Post Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Complete job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    }
+   ],
+   "errors": null,
+   "report_path": null,
+   "recorded_at": "2026-09-18T11:15:41+00:00"
+  },
+  {
+   "run_id": "35337725575",
+   "workflow": "CI",
+   "run_number": 14,
+   "event": "push",
+   "head_sha": "b9d1d03",
+   "commit_message": "feat: dashboard de execuções do pipeline (Vercel + D1 + registo no CI)",
+   "status": "success",
+   "duration_seconds": 76,
+   "run_started_at": "2026-09-18T11:10:46Z",
+   "updated_at": "2026-09-18T11:12:02Z",
+   "html_url": "https://github.com/lpfma2374/etl-agent-pipeline/actions/runs/35337725575",
+   "gates": [
+    {
+     "step": "Set up job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 4.0
+    },
+    {
+     "step": "Instalar dependências",
+     "gate": "Setup",
+     "tool": "pip install",
+     "status": "success",
+     "seconds": 34.0
+    },
+    {
+     "step": "Lint",
+     "gate": "Lint",
+     "tool": "ruff",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Gerar dados sintéticos (seed, 200 registos -> 4 lotes)",
+     "gate": "Seed",
+     "tool": "make_seed.py (dados sintéticos)",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Batch-run: pipeline completo por lotes de 50 (extract -> dbt -> GE -> load -> report)",
+     "gate": "Pipeline completo",
+     "tool": "run_batches.py (extract→dbt→GE→load→report)",
+     "status": "success",
+     "seconds": 24.0
+    },
+    {
+     "step": "dbt docs (catálogo)",
+     "gate": "dbt docs",
+     "tool": "dbt-core",
+     "status": "success",
+     "seconds": 4.0
+    },
+    {
+     "step": "Run actions/upload-artifact@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Registar execução no dashboard (D1 etl-executions)",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Post Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Post Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Complete job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    }
+   ],
+   "errors": null,
+   "report_path": null,
+   "recorded_at": "2026-09-18T11:14:22+00:00"
+  },
+  {
+   "run_id": "35021786099",
+   "workflow": "CI",
+   "run_number": 13,
+   "event": "push",
+   "head_sha": "c239ba9",
+   "commit_message": "feat: rota Airtable Frameworks -> Neon PostgreSQL (relacional, com FKs)",
+   "status": "failure",
+   "duration_seconds": 46,
+   "run_started_at": "2026-09-15T20:47:33Z",
+   "updated_at": "2026-09-15T20:48:19Z",
+   "html_url": "https://github.com/lpfma2374/etl-agent-pipeline/actions/runs/35021786099",
+   "gates": [
+    {
+     "step": "Set up job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 3.0
+    },
+    {
+     "step": "Instalar dependências",
+     "gate": "Setup",
+     "tool": "pip install",
+     "status": "success",
+     "seconds": 33.0
+    },
+    {
+     "step": "Lint",
+     "gate": "Lint",
+     "tool": "ruff",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Gerar dados sintéticos (seed, 200 registos -> 4 lotes)",
+     "gate": "Seed",
+     "tool": "make_seed.py (dados sintéticos)",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Batch-run: pipeline completo por lotes de 50 (extract -> dbt -> GE -> load -> report)",
+     "gate": "Pipeline completo",
+     "tool": "run_batches.py (extract→dbt→GE→load→report)",
+     "status": "failure",
+     "seconds": 1.0
+    },
+    {
+     "step": "dbt docs (catálogo)",
+     "gate": "dbt docs",
+     "tool": "dbt-core",
+     "status": "skipped",
+     "seconds": 0.0
+    },
+    {
+     "step": "Run actions/upload-artifact@v4",
+     "gate": null,
+     "tool": null,
+     "status": "skipped",
+     "seconds": 0.0
+    },
+    {
+     "step": "Post Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "skipped",
+     "seconds": 0.0
+    },
+    {
+     "step": "Post Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Complete job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    }
+   ],
+   "errors": "[Batch-run: pipeline completo por lotes de 50 (extract -> dbt -> GE -> load -> report)] failure",
+   "report_path": null,
+   "recorded_at": "2026-09-18T11:00:50+00:00"
+  },
+  {
+   "run_id": "34703549070",
+   "workflow": "CI",
+   "run_number": 12,
+   "event": "push",
+   "head_sha": "2c68adf",
+   "commit_message": "chore: remove workflow utilitário temporário",
+   "status": "success",
+   "duration_seconds": 65,
+   "run_started_at": "2026-09-12T15:52:41Z",
+   "updated_at": "2026-09-12T15:53:46Z",
+   "html_url": "https://github.com/lpfma2374/etl-agent-pipeline/actions/runs/34703549070",
+   "gates": [
+    {
+     "step": "Set up job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 3.0
+    },
+    {
+     "step": "Instalar dependências",
+     "gate": "Setup",
+     "tool": "pip install",
+     "status": "success",
+     "seconds": 29.0
+    },
+    {
+     "step": "Lint",
+     "gate": "Lint",
+     "tool": "ruff",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Gerar dados sintéticos (seed, 200 registos -> 4 lotes)",
+     "gate": "Seed",
+     "tool": "make_seed.py (dados sintéticos)",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Batch-run: pipeline completo por lotes de 50 (extract -> dbt -> GE -> load -> report)",
+     "gate": "Pipeline completo",
+     "tool": "run_batches.py (extract→dbt→GE→load→report)",
+     "status": "success",
+     "seconds": 19.0
+    },
+    {
+     "step": "dbt docs (catálogo)",
+     "gate": "dbt docs",
+     "tool": "dbt-core",
+     "status": "success",
+     "seconds": 4.0
+    },
+    {
+     "step": "Run actions/upload-artifact@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Post Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Post Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Complete job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    }
+   ],
+   "errors": null,
+   "report_path": null,
+   "recorded_at": "2026-09-18T11:00:51+00:00"
+  },
+  {
+   "run_id": "34703510825",
+   "workflow": "Sincronizar AIRTABLE_API_KEY para Vercel",
+   "run_number": 1,
+   "event": "workflow_dispatch",
+   "head_sha": "c5511e1",
+   "commit_message": "chore: workflow utilitário para sincronizar AIRTABLE_API_KEY com o projeto Vercel do Frameworks",
+   "status": "failure",
+   "duration_seconds": 8,
+   "run_started_at": "2026-09-12T15:51:55Z",
+   "updated_at": "2026-09-12T15:52:03Z",
+   "html_url": "https://github.com/lpfma2374/etl-agent-pipeline/actions/runs/34703510825",
+   "gates": [
+    {
+     "step": "Set up job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Transferir (sem expor o valor)",
+     "gate": null,
+     "tool": null,
+     "status": "failure",
+     "seconds": 0.0
+    },
+    {
+     "step": "Complete job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    }
+   ],
+   "errors": "[Transferir (sem expor o valor)] failure",
+   "report_path": null,
+   "recorded_at": "2026-09-18T11:00:52+00:00"
+  },
+  {
+   "run_id": "34703508504",
+   "workflow": "CI",
+   "run_number": 11,
+   "event": "push",
+   "head_sha": "c5511e1",
+   "commit_message": "chore: workflow utilitário para sincronizar AIRTABLE_API_KEY com o projeto Vercel do Frameworks",
+   "status": "success",
+   "duration_seconds": 70,
+   "run_started_at": "2026-09-12T15:51:53Z",
+   "updated_at": "2026-09-12T15:53:03Z",
+   "html_url": "https://github.com/lpfma2374/etl-agent-pipeline/actions/runs/34703508504",
+   "gates": [
+    {
+     "step": "Set up job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 2.0
+    },
+    {
+     "step": "Instalar dependências",
+     "gate": "Setup",
+     "tool": "pip install",
+     "status": "success",
+     "seconds": 33.0
+    },
+    {
+     "step": "Lint",
+     "gate": "Lint",
+     "tool": "ruff",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Gerar dados sintéticos (seed, 200 registos -> 4 lotes)",
+     "gate": "Seed",
+     "tool": "make_seed.py (dados sintéticos)",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Batch-run: pipeline completo por lotes de 50 (extract -> dbt -> GE -> load -> report)",
+     "gate": "Pipeline completo",
+     "tool": "run_batches.py (extract→dbt→GE→load→report)",
+     "status": "success",
+     "seconds": 24.0
+    },
+    {
+     "step": "dbt docs (catálogo)",
+     "gate": "dbt docs",
+     "tool": "dbt-core",
+     "status": "success",
+     "seconds": 4.0
+    },
+    {
+     "step": "Run actions/upload-artifact@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Post Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Post Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Complete job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    }
+   ],
+   "errors": null,
+   "report_path": null,
+   "recorded_at": "2026-09-18T11:00:53+00:00"
+  },
+  {
+   "run_id": "34684977807",
+   "workflow": "CI",
+   "run_number": 10,
+   "event": "push",
+   "head_sha": "85a50d2",
+   "commit_message": "feat: linked records na base Frameworks (6 campos link, 358 ligações)",
+   "status": "success",
+   "duration_seconds": 72,
+   "run_started_at": "2026-09-12T09:06:32Z",
+   "updated_at": "2026-09-12T09:07:44Z",
+   "html_url": "https://github.com/lpfma2374/etl-agent-pipeline/actions/runs/34684977807",
+   "gates": [
+    {
+     "step": "Set up job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 2.0
+    },
+    {
+     "step": "Instalar dependências",
+     "gate": "Setup",
+     "tool": "pip install",
+     "status": "success",
+     "seconds": 34.0
+    },
+    {
+     "step": "Lint",
+     "gate": "Lint",
+     "tool": "ruff",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Gerar dados sintéticos (seed, 200 registos -> 4 lotes)",
+     "gate": "Seed",
+     "tool": "make_seed.py (dados sintéticos)",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Batch-run: pipeline completo por lotes de 50 (extract -> dbt -> GE -> load -> report)",
+     "gate": "Pipeline completo",
+     "tool": "run_batches.py (extract→dbt→GE→load→report)",
+     "status": "success",
+     "seconds": 23.0
+    },
+    {
+     "step": "dbt docs (catálogo)",
+     "gate": "dbt docs",
+     "tool": "dbt-core",
+     "status": "success",
+     "seconds": 4.0
+    },
+    {
+     "step": "Run actions/upload-artifact@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Post Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Post Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Complete job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    }
+   ],
+   "errors": null,
+   "report_path": null,
+   "recorded_at": "2026-09-18T11:00:54+00:00"
+  },
+  {
+   "run_id": "34684792697",
+   "workflow": "CI",
+   "run_number": 9,
+   "event": "push",
+   "head_sha": "186240d",
+   "commit_message": "feat: rota zip Frameworks (6 CSVs) -> Airtable base 'Frameworks'",
+   "status": "success",
+   "duration_seconds": 73,
+   "run_started_at": "2026-09-12T09:02:16Z",
+   "updated_at": "2026-09-12T09:03:29Z",
+   "html_url": "https://github.com/lpfma2374/etl-agent-pipeline/actions/runs/34684792697",
+   "gates": [
+    {
+     "step": "Set up job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 2.0
+    },
+    {
+     "step": "Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 7.0
+    },
+    {
+     "step": "Instalar dependências",
+     "gate": "Setup",
+     "tool": "pip install",
+     "status": "success",
+     "seconds": 36.0
+    },
+    {
+     "step": "Lint",
+     "gate": "Lint",
+     "tool": "ruff",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Gerar dados sintéticos (seed, 200 registos -> 4 lotes)",
+     "gate": "Seed",
+     "tool": "make_seed.py (dados sintéticos)",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Batch-run: pipeline completo por lotes de 50 (extract -> dbt -> GE -> load -> report)",
+     "gate": "Pipeline completo",
+     "tool": "run_batches.py (extract→dbt→GE→load→report)",
+     "status": "success",
+     "seconds": 17.0
+    },
+    {
+     "step": "dbt docs (catálogo)",
+     "gate": "dbt docs",
+     "tool": "dbt-core",
+     "status": "success",
+     "seconds": 3.0
+    },
+    {
+     "step": "Run actions/upload-artifact@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Post Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Post Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Complete job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    }
+   ],
+   "errors": null,
+   "report_path": null,
+   "recorded_at": "2026-09-18T11:00:55+00:00"
+  },
+  {
+   "run_id": "34636646632",
+   "workflow": "CI",
+   "run_number": 8,
+   "event": "push",
+   "head_sha": "6deccd7",
+   "commit_message": "fix: report de batch-run distingue 'entregues (upsert)' de 'novas'",
+   "status": "success",
+   "duration_seconds": 84,
+   "run_started_at": "2026-09-11T19:02:22Z",
+   "updated_at": "2026-09-11T19:03:46Z",
+   "html_url": "https://github.com/lpfma2374/etl-agent-pipeline/actions/runs/34636646632",
+   "gates": [
+    {
+     "step": "Set up job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 5.0
+    },
+    {
+     "step": "Instalar dependências",
+     "gate": "Setup",
+     "tool": "pip install",
+     "status": "success",
+     "seconds": 35.0
+    },
+    {
+     "step": "Lint",
+     "gate": "Lint",
+     "tool": "ruff",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Gerar dados sintéticos (seed, 200 registos -> 4 lotes)",
+     "gate": "Seed",
+     "tool": "make_seed.py (dados sintéticos)",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Batch-run: pipeline completo por lotes de 50 (extract -> dbt -> GE -> load -> report)",
+     "gate": "Pipeline completo",
+     "tool": "run_batches.py (extract→dbt→GE→load→report)",
+     "status": "success",
+     "seconds": 26.0
+    },
+    {
+     "step": "dbt docs (catálogo)",
+     "gate": "dbt docs",
+     "tool": "dbt-core",
+     "status": "success",
+     "seconds": 5.0
+    },
+    {
+     "step": "Run actions/upload-artifact@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Post Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Post Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Complete job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    }
+   ],
+   "errors": null,
+   "report_path": null,
+   "recorded_at": "2026-09-18T11:00:56+00:00"
+  },
+  {
+   "run_id": "34635768242",
+   "workflow": "CI",
+   "run_number": 7,
+   "event": "push",
+   "head_sha": "a66652d",
+   "commit_message": "feat: rota Google Drive -> Airtable (extractor gdrive, loader airtable com upsert)",
+   "status": "success",
+   "duration_seconds": 78,
+   "run_started_at": "2026-09-11T18:52:55Z",
+   "updated_at": "2026-09-11T18:54:13Z",
+   "html_url": "https://github.com/lpfma2374/etl-agent-pipeline/actions/runs/34635768242",
+   "gates": [
+    {
+     "step": "Set up job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 7.0
+    },
+    {
+     "step": "Instalar dependências",
+     "gate": "Setup",
+     "tool": "pip install",
+     "status": "success",
+     "seconds": 33.0
+    },
+    {
+     "step": "Lint",
+     "gate": "Lint",
+     "tool": "ruff",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Gerar dados sintéticos (seed, 200 registos -> 4 lotes)",
+     "gate": "Seed",
+     "tool": "make_seed.py (dados sintéticos)",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Batch-run: pipeline completo por lotes de 50 (extract -> dbt -> GE -> load -> report)",
+     "gate": "Pipeline completo",
+     "tool": "run_batches.py (extract→dbt→GE→load→report)",
+     "status": "success",
+     "seconds": 24.0
+    },
+    {
+     "step": "dbt docs (catálogo)",
+     "gate": "dbt docs",
+     "tool": "dbt-core",
+     "status": "success",
+     "seconds": 4.0
+    },
+    {
+     "step": "Run actions/upload-artifact@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 2.0
+    },
+    {
+     "step": "Post Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Post Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Complete job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    }
+   ],
+   "errors": null,
+   "report_path": null,
+   "recorded_at": "2026-09-18T11:00:57+00:00"
+  },
+  {
+   "run_id": "34624156001",
+   "workflow": "CI",
+   "run_number": 6,
+   "event": "push",
+   "head_sha": "9237bad",
+   "commit_message": "fix(loader D1): tipos de coluna corretos e binding compativel com PRIMARY KEY",
+   "status": "success",
+   "duration_seconds": 76,
+   "run_started_at": "2026-09-11T16:49:00Z",
+   "updated_at": "2026-09-11T16:50:16Z",
+   "html_url": "https://github.com/lpfma2374/etl-agent-pipeline/actions/runs/34624156001",
+   "gates": [
+    {
+     "step": "Set up job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 5.0
+    },
+    {
+     "step": "Instalar dependências",
+     "gate": "Setup",
+     "tool": "pip install",
+     "status": "success",
+     "seconds": 33.0
+    },
+    {
+     "step": "Lint",
+     "gate": "Lint",
+     "tool": "ruff",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Gerar dados sintéticos (seed, 200 registos -> 4 lotes)",
+     "gate": "Seed",
+     "tool": "make_seed.py (dados sintéticos)",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Batch-run: pipeline completo por lotes de 50 (extract -> dbt -> GE -> load -> report)",
+     "gate": "Pipeline completo",
+     "tool": "run_batches.py (extract→dbt→GE→load→report)",
+     "status": "success",
+     "seconds": 23.0
+    },
+    {
+     "step": "dbt docs (catálogo)",
+     "gate": "dbt docs",
+     "tool": "dbt-core",
+     "status": "success",
+     "seconds": 3.0
+    },
+    {
+     "step": "Run actions/upload-artifact@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 2.0
+    },
+    {
+     "step": "Post Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Post Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Complete job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    }
+   ],
+   "errors": null,
+   "report_path": null,
+   "recorded_at": "2026-09-18T11:00:58+00:00"
+  },
+  {
+   "run_id": "34622763636",
+   "workflow": "CI",
+   "run_number": 5,
+   "event": "push",
+   "head_sha": "7118eae",
+   "commit_message": "feat: rota Airtable 'References' -> Cloudflare D1 (tabela espelho)",
+   "status": "success",
+   "duration_seconds": 62,
+   "run_started_at": "2026-09-11T16:34:21Z",
+   "updated_at": "2026-09-11T16:35:23Z",
+   "html_url": "https://github.com/lpfma2374/etl-agent-pipeline/actions/runs/34622763636",
+   "gates": [
+    {
+     "step": "Set up job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 2.0
+    },
+    {
+     "step": "Instalar dependências",
+     "gate": "Setup",
+     "tool": "pip install",
+     "status": "success",
+     "seconds": 27.0
+    },
+    {
+     "step": "Lint",
+     "gate": "Lint",
+     "tool": "ruff",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Gerar dados sintéticos (seed, 200 registos -> 4 lotes)",
+     "gate": "Seed",
+     "tool": "make_seed.py (dados sintéticos)",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Batch-run: pipeline completo por lotes de 50 (extract -> dbt -> GE -> load -> report)",
+     "gate": "Pipeline completo",
+     "tool": "run_batches.py (extract→dbt→GE→load→report)",
+     "status": "success",
+     "seconds": 22.0
+    },
+    {
+     "step": "dbt docs (catálogo)",
+     "gate": "dbt docs",
+     "tool": "dbt-core",
+     "status": "success",
+     "seconds": 3.0
+    },
+    {
+     "step": "Run actions/upload-artifact@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Post Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Post Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Complete job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    }
+   ],
+   "errors": null,
+   "report_path": null,
+   "recorded_at": "2026-09-18T11:00:59+00:00"
+  },
+  {
+   "run_id": "34543105191",
+   "workflow": "CI",
+   "run_number": 4,
+   "event": "push",
+   "head_sha": "d4fa9a6",
+   "commit_message": "feat: extração por lotes de máx. 50 registos — pipeline completo por lote",
+   "status": "success",
+   "duration_seconds": 76,
+   "run_started_at": "2026-09-10T23:39:17Z",
+   "updated_at": "2026-09-10T23:40:33Z",
+   "html_url": "https://github.com/lpfma2374/etl-agent-pipeline/actions/runs/34543105191",
+   "gates": [
+    {
+     "step": "Set up job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 4.0
+    },
+    {
+     "step": "Instalar dependências",
+     "gate": "Setup",
+     "tool": "pip install",
+     "status": "success",
+     "seconds": 33.0
+    },
+    {
+     "step": "Lint",
+     "gate": "Lint",
+     "tool": "ruff",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Gerar dados sintéticos (seed, 200 registos -> 4 lotes)",
+     "gate": "Seed",
+     "tool": "make_seed.py (dados sintéticos)",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Batch-run: pipeline completo por lotes de 50 (extract -> dbt -> GE -> load -> report)",
+     "gate": "Pipeline completo",
+     "tool": "run_batches.py (extract→dbt→GE→load→report)",
+     "status": "success",
+     "seconds": 24.0
+    },
+    {
+     "step": "dbt docs (catálogo)",
+     "gate": "dbt docs",
+     "tool": "dbt-core",
+     "status": "success",
+     "seconds": 4.0
+    },
+    {
+     "step": "Run actions/upload-artifact@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Post Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Post Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Complete job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    }
+   ],
+   "errors": null,
+   "report_path": null,
+   "recorded_at": "2026-09-18T11:01:00+00:00"
+  },
+  {
+   "run_id": "34542103366",
+   "workflow": "Pipeline (migração real)",
+   "run_number": 2,
+   "event": "workflow_dispatch",
+   "head_sha": "36245a6",
+   "commit_message": "docs: badge de CI no README",
+   "status": "cancelled",
+   "duration_seconds": 34,
+   "run_started_at": "2026-09-10T23:25:44Z",
+   "updated_at": "2026-09-10T23:26:18Z",
+   "html_url": "https://github.com/lpfma2374/etl-agent-pipeline/actions/runs/34542103366",
+   "gates": [
+    {
+     "step": "Set up job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 4.0
+    },
+    {
+     "step": "Instalar dependências",
+     "gate": "Setup",
+     "tool": "pip install",
+     "status": "cancelled",
+     "seconds": 22.0
+    },
+    {
+     "step": "[1] Extract",
+     "gate": "Extract",
+     "tool": "pandas + requests (padrão Airbyte)",
+     "status": "skipped",
+     "seconds": 0.0
+    },
+    {
+     "step": "[2] Transform (dbt)",
+     "gate": "Transform",
+     "tool": "dbt-core (DuckDB staging)",
+     "status": "skipped",
+     "seconds": 0.0
+    },
+    {
+     "step": "[3] Validate (Great Expectations — aborta se falhar)",
+     "gate": "Validate",
+     "tool": "Great Expectations (gate de qualidade)",
+     "status": "skipped",
+     "seconds": 0.0
+    },
+    {
+     "step": "[4] Load",
+     "gate": "Load",
+     "tool": "Loader destino (upsert por PK)",
+     "status": "skipped",
+     "seconds": 0.0
+    },
+    {
+     "step": "[5] Commit do relatório de execução",
+     "gate": "Report",
+     "tool": "Report de auditoria (docs/executions)",
+     "status": "skipped",
+     "seconds": 0.0
+    },
+    {
+     "step": "Publicar relatório no repo (auditoria)",
+     "gate": "Publicação",
+     "tool": "git push (auditoria)",
+     "status": "skipped",
+     "seconds": 0.0
+    },
+    {
+     "step": "Post Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "skipped",
+     "seconds": 0.0
+    },
+    {
+     "step": "Post Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Complete job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    }
+   ],
+   "errors": "[Instalar dependências] cancelled",
+   "report_path": null,
+   "recorded_at": "2026-09-18T11:01:01+00:00"
+  },
+  {
+   "run_id": "34542101216",
+   "workflow": "CI",
+   "run_number": 3,
+   "event": "push",
+   "head_sha": "36245a6",
+   "commit_message": "docs: badge de CI no README",
+   "status": "success",
+   "duration_seconds": 62,
+   "run_started_at": "2026-09-10T23:25:42Z",
+   "updated_at": "2026-09-10T23:26:44Z",
+   "html_url": "https://github.com/lpfma2374/etl-agent-pipeline/actions/runs/34542101216",
+   "gates": [
+    {
+     "step": "Set up job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 2.0
+    },
+    {
+     "step": "Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 6.0
+    },
+    {
+     "step": "Instalar dependências",
+     "gate": "Setup",
+     "tool": "pip install",
+     "status": "success",
+     "seconds": 31.0
+    },
+    {
+     "step": "Lint",
+     "gate": "Lint",
+     "tool": "ruff",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Gerar dados sintéticos (seed)",
+     "gate": "Seed",
+     "tool": "make_seed.py (dados sintéticos)",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "[1] Extract (CSV -> DuckDB raw)",
+     "gate": "Extract",
+     "tool": "pandas + requests (padrão Airbyte)",
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "[2] Transform (dbt: staging -> marts)",
+     "gate": "Transform",
+     "tool": "dbt-core (DuckDB staging)",
+     "status": "success",
+     "seconds": 5.0
+    },
+    {
+     "step": "[2.5] Export marts (parquet — artefacto validado)",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "[3] Validate (Great Expectations — compliance gate)",
+     "gate": "Validate",
+     "tool": "Great Expectations (gate de qualidade)",
+     "status": "success",
+     "seconds": 4.0
+    },
+    {
+     "step": "[4] Load (DuckDB destino — validação de ponta a ponta)",
+     "gate": "Load",
+     "tool": "Loader destino (upsert por PK)",
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "[5] Report",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "dbt docs (catálogo)",
+     "gate": "dbt docs",
+     "tool": "dbt-core",
+     "status": "success",
+     "seconds": 3.0
+    },
+    {
+     "step": "Run actions/upload-artifact@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Post Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Post Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Complete job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    }
+   ],
+   "errors": null,
+   "report_path": null,
+   "recorded_at": "2026-09-18T11:01:02+00:00"
+  },
+  {
+   "run_id": "34541741249",
+   "workflow": "CI",
+   "run_number": 2,
+   "event": "push",
+   "head_sha": "549293b",
+   "commit_message": "fix(ci): quoting nos nomes de steps que começam por '[' — YAML inválido",
+   "status": "success",
+   "duration_seconds": 104,
+   "run_started_at": "2026-09-10T23:20:58Z",
+   "updated_at": "2026-09-10T23:22:42Z",
+   "html_url": "https://github.com/lpfma2374/etl-agent-pipeline/actions/runs/34541741249",
+   "gates": [
+    {
+     "step": "Set up job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 2.0
+    },
+    {
+     "step": "Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 3.0
+    },
+    {
+     "step": "Instalar dependências",
+     "gate": "Setup",
+     "tool": "pip install",
+     "status": "success",
+     "seconds": 74.0
+    },
+    {
+     "step": "Lint",
+     "gate": "Lint",
+     "tool": "ruff",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Gerar dados sintéticos (seed)",
+     "gate": "Seed",
+     "tool": "make_seed.py (dados sintéticos)",
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "[1] Extract (CSV -> DuckDB raw)",
+     "gate": "Extract",
+     "tool": "pandas + requests (padrão Airbyte)",
+     "status": "success",
+     "seconds": 2.0
+    },
+    {
+     "step": "[2] Transform (dbt: staging -> marts)",
+     "gate": "Transform",
+     "tool": "dbt-core (DuckDB staging)",
+     "status": "success",
+     "seconds": 5.0
+    },
+    {
+     "step": "[2.5] Export marts (parquet — artefacto validado)",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "[3] Validate (Great Expectations — compliance gate)",
+     "gate": "Validate",
+     "tool": "Great Expectations (gate de qualidade)",
+     "status": "success",
+     "seconds": 4.0
+    },
+    {
+     "step": "[4] Load (DuckDB destino — validação de ponta a ponta)",
+     "gate": "Load",
+     "tool": "Loader destino (upsert por PK)",
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "[5] Report",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "dbt docs (catálogo)",
+     "gate": "dbt docs",
+     "tool": "dbt-core",
+     "status": "success",
+     "seconds": 2.0
+    },
+    {
+     "step": "Run actions/upload-artifact@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 1.0
+    },
+    {
+     "step": "Post Run actions/setup-python@v5",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 3.0
+    },
+    {
+     "step": "Post Run actions/checkout@v4",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    },
+    {
+     "step": "Complete job",
+     "gate": null,
+     "tool": null,
+     "status": "success",
+     "seconds": 0.0
+    }
+   ],
+   "errors": null,
+   "report_path": null,
+   "recorded_at": "2026-09-18T11:01:03+00:00"
+  },
+  {
+   "run_id": "34541659429",
+   "workflow": "Pipeline (migração real)",
+   "run_number": 1,
+   "event": "push",
+   "head_sha": "94038a8",
+   "commit_message": "fix: lint ruff (E402, DTZ005, S110), export parquet como artefacto validado",
+   "status": "failure",
+   "duration_seconds": 0,
+   "run_started_at": "2026-09-10T23:19:53Z",
+   "updated_at": "2026-09-10T23:19:53Z",
+   "html_url": "https://github.com/lpfma2374/etl-agent-pipeline/actions/runs/34541659429",
+   "gates": [],
+   "errors": null,
+   "report_path": null,
+   "recorded_at": "2026-09-18T11:01:04+00:00"
+  },
+  {
+   "run_id": "34541658641",
+   "workflow": "CI",
+   "run_number": 1,
+   "event": "push",
+   "head_sha": "94038a8",
+   "commit_message": "fix: lint ruff (E402, DTZ005, S110), export parquet como artefacto validado",
+   "status": "failure",
+   "duration_seconds": 0,
+   "run_started_at": "2026-09-10T23:19:52Z",
+   "updated_at": "2026-09-10T23:19:52Z",
+   "html_url": "https://github.com/lpfma2374/etl-agent-pipeline/actions/runs/34541658641",
+   "gates": [],
+   "errors": null,
+   "report_path": null,
+   "recorded_at": "2026-09-18T11:01:05+00:00"
+  }
+ ],
+ "generated_at": "2026-09-18T11:18:10.248119+00:00",
+ "_nota": "snapshot de fallback — o site usa /api/executions (D1 em direto); este ficheiro serve apenas se a API estiver indisponível"
+}

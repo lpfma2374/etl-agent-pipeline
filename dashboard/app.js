@@ -49,9 +49,20 @@ async function load() {
     $("#last-updated").textContent =
       `atualizado às ${new Date().toLocaleTimeString("pt-PT")}`;
   } catch (e) {
-    $("#last-updated").textContent = "erro ao carregar";
-    $("#tbody").innerHTML =
-      `<tr><td colspan="7" class="muted">Sem ligação à API de execuções (${e.message}).</td></tr>`;
+    // fallback: snapshot estático se a serverless estiver indisponível
+    try {
+      const r2 = await fetch("./executions.json", { cache: "no-store" });
+      if (!r2.ok) throw new Error(`HTTP ${r2.status}`);
+      const body = await r2.json();
+      EXECUTIONS = body.executions || [];
+      render();
+      $("#last-updated").textContent = "snapshot (API indisponível)";
+      return;
+    } catch (e2) {
+      $("#last-updated").textContent = "erro ao carregar";
+      $("#tbody").innerHTML =
+        `<tr><td colspan="7" class="muted">Sem ligação à API de execuções (${e.message}).</td></tr>`;
+    }
   }
 }
 
