@@ -3,7 +3,7 @@
  * renderiza os gráficos. Dados: staging parquet servido same-origin por
  * /api/etl-analytics. Perfil automático + exploração SQL ao vivo.
  */
-import * as duckdb from "https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@1.29.0/dist/duckdb-browser.mjs";
+import * as duckdb from "https://esm.sh/@duckdb/duckdb-wasm@1.29.0";
 
 let db = null;          // AsyncDuckDBConnection
 let analyticsData = null; // { rows, columns: [{name, type, kind}] }
