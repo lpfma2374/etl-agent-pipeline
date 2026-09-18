@@ -241,3 +241,94 @@ footer {
   .stat-value { font-size: 34px; }
   .card { padding: 20px; }
 }
+
+/* ================= Novo ETL — wizard ================= */
+.cta-pill {
+  border: none; cursor: pointer; font-family: inherit;
+  background: var(--blue); color: #fff;
+  font-weight: 600; font-size: 13px;
+  padding: 7px 16px; border-radius: 999px;
+}
+.cta-pill:hover { background: var(--blue-hover); }
+
+.etl-wizard { max-width: 760px; }
+.etl-step { display: flex; flex-direction: column; gap: 14px; }
+.etl-section-title { font-size: 13px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 6px; }
+.etl-section-title.fail { color: var(--red); }
+
+.etl-origin-toggle { display: flex; gap: 10px; }
+.etl-origin-btn {
+  flex: 1; padding: 12px 16px; border-radius: 12px; cursor: pointer;
+  background: var(--bg); border: 1px solid var(--line); color: var(--ink);
+  font-family: inherit; font-size: 14px; font-weight: 500;
+}
+.etl-origin-btn.active { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,113,227,.15); font-weight: 600; }
+
+.etl-file-zone {
+  display: block; padding: 22px 18px; text-align: center;
+  border: 1px dashed var(--line); border-radius: 12px;
+  color: var(--muted); font-size: 14px; cursor: pointer;
+}
+.etl-file-zone:hover { border-color: var(--blue); color: var(--ink); }
+.etl-sheets-row input, .etl-dest-row select {
+  width: 100%; padding: 11px 14px; font-size: 15px; font-family: inherit;
+  color: var(--ink); background: #fff;
+  border: 1px solid var(--line); border-radius: 10px;
+}
+.etl-sheets-row input:focus, .etl-dest-row select:focus {
+  outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,113,227,.15);
+}
+.etl-dest-row .hint { margin-top: 8px; }
+.hint { font-size: 13px; color: var(--muted); line-height: 1.5; margin: 0; }
+
+.etl-primary { align-self: flex-start; font-size: 14px; padding: 10px 22px; }
+.etl-primary:disabled { opacity: 0.6; cursor: default; }
+.etl-ghost-btn {
+  border: 1px solid var(--line); background: #fff; color: var(--ink);
+  border-radius: 999px; padding: 10px 22px; font-size: 14px; cursor: pointer; font-family: inherit;
+}
+.etl-ghost-btn:hover { background: var(--bg); }
+
+.etl-error {
+  background: var(--red-soft); color: var(--red);
+  border-radius: 10px; padding: 12px 14px; font-size: 14px; line-height: 1.5;
+}
+.etl-err-inline { color: var(--red); font-size: 14px; }
+
+.etl-progress { display: flex; gap: 16px; align-items: center; padding: 24px 4px; }
+.etl-progress-title { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+.spinner {
+  flex: none; width: 28px; height: 28px; border-radius: 50%;
+  border: 3px solid var(--line); border-top-color: var(--blue);
+  animation: etl-spin 0.9s linear infinite;
+}
+@keyframes etl-spin { to { transform: rotate(360deg); } }
+
+.etl-count-badge {
+  background: var(--blue-soft); color: var(--blue);
+  border-radius: 999px; padding: 3px 10px; font-size: 12px;
+  text-transform: none; letter-spacing: 0; margin-left: 8px;
+}
+.etl-data-meta { display: flex; flex-wrap: wrap; gap: 8px; }
+.etl-chip {
+  display: inline-block; font-size: 12px; font-weight: 500;
+  background: var(--bg); border: 1px solid var(--line);
+  border-radius: 999px; padding: 3px 10px;
+}
+.etl-chip em { color: var(--muted); font-style: normal; font-weight: 400; margin-left: 4px; }
+.etl-preview-wrap { max-height: 320px; overflow: auto; }
+.etl-preview-wrap thead th, .etl-preview-wrap tbody td { white-space: nowrap; }
+
+.etl-wizard textarea {
+  width: 100%; font-family: inherit; font-size: 15px; color: var(--ink);
+  border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px;
+  resize: vertical;
+}
+.etl-wizard textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,113,227,.15); }
+
+.etl-kv { font-size: 14px; }
+.etl-kv .k {
+  display: block; font-size: 11px; font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 2px;
+}
+.etl-wizard-actions { display: flex; gap: 12px; margin-top: 8px; }

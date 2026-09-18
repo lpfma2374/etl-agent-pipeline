@@ -2,12 +2,18 @@
 
 from .airtable import AirtableExtractor
 from .csv import CsvExtractor
+from .duckdb_staging import DuckDBStagingExtractor
+from .excel import ExcelExtractor
 from .gdrive import GoogleDriveExtractor
+from .gsheets import GoogleSheetsExtractor
 
 REGISTRY = {
     "airtable": AirtableExtractor,
     "csv": CsvExtractor,
+    "excel": ExcelExtractor,
+    "gsheets": GoogleSheetsExtractor,
     "google_drive": GoogleDriveExtractor,
+    "duckdb_staging": DuckDBStagingExtractor,
 }
 
 
