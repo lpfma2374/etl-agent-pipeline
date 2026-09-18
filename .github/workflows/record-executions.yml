@@ -1,0 +1,25 @@
+name: Registar execução no dashboard
+
+# Listener: quando um workflow do pipeline termina (sucesso OU falha),
+# regista o estado FINAL do run no D1 'etl-executions' (dashboard Vercel).
+# Corre depois do run — por isso vê a conclusão final e não 'in_progress'.
+on:
+  workflow_run:
+    workflows: [CI, "Pipeline (migração real)"]
+    types: [completed]
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Registar run finalizado no D1 (idempotente por run_id)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+        run: python3 scripts/record_execution.py --run-id ${{ github.event.workflow_run.id }}

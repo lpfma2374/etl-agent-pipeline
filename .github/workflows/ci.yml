@@ -8,9 +8,6 @@ on:
 jobs:
   quality-gate:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      actions: read  # ler o próprio run/jobs para o registo no dashboard
     steps:
       - uses: actions/checkout@v4
 
@@ -56,11 +53,3 @@ jobs:
             target/
             destination.duckdb
           retention-days: 30
-
-      - name: Registar execução no dashboard (D1 etl-executions)
-        if: always()
-        env:
-          GH_TOKEN: ${{ github.token }}
-          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
-        run: python scripts/record_execution.py || echo "registo no D1 falhou (não bloqueia o CI)"

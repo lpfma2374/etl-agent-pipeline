@@ -14,8 +14,7 @@ jobs:
   etl:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      actions: read  # ler o próprio run/jobs para o registo no dashboard
+      contents: write  # commit do relatório de execução
     steps:
       - uses: actions/checkout@v4
 
@@ -60,11 +59,3 @@ jobs:
           git add docs/executions/
           git commit -m "execution report: ${{ inputs.config }}" || echo "sem alterações"
           git push
-
-      - name: Registar execução no dashboard (D1 etl-executions)
-        if: always()
-        env:
-          GH_TOKEN: ${{ github.token }}
-          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
-        run: python scripts/record_execution.py || echo "registo no D1 falhou (não bloqueia o pipeline)"
