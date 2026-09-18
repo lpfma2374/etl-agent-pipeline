@@ -1,0 +1,42 @@
+<!doctype html>
+<!-- Selftest temporário do Analytics (mesma origem, código real analytics.js).
+     Remover após verificação. -->
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<title>Analytics selftest</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+  body { font-family: -apple-system, sans-serif; margin: 24px; color: #1d1d1f; background: #f5f5f7; }
+  .hidden { display: none; }
+  #an-status { font-size: 15px; margin-bottom: 12px; }
+  #an-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; }
+  .an-chart { height: 260px; background: #fff; border-radius: 12px; }
+  .an-sql-err { color: #c0392b; }
+  table, th, td { border-collapse: collapse; padding: 4px 8px; font-size: 13px; }
+</style>
+</head>
+<body>
+  <h2>Selftest Analytics — pedido 6aad277f5aa287b251f4f71a</h2>
+  <div id="etl-analytics-view">
+    <div id="an-status">a inicializar…</div>
+    <div id="an-overview"></div>
+    <div id="an-grid"></div>
+    <input id="an-sql" placeholder="SQL" value="SELECT produto, preco FROM staging ORDER BY preco DESC">
+    <pre id="an-explore-out"></pre>
+  </div>
+  <div id="etl-data-view" class="hidden">data view</div>
+  <script type="module">
+    import("./analytics.js").then(async () => {
+      await window.etlAnalytics.openAnalytics("6aad277f5aa287b251f4f71a");
+      try {
+        await window.etlAnalytics.runExplore();
+        const out = document.querySelector("#an-explore-out").textContent;
+        document.title = out.includes("Mochila") ? "SELFTEST PASS" : "SELFTEST SQL FAIL";
+      } catch (e) {
+        document.title = "SELFTEST FAIL: " + e.message;
+      }
+    });
+  </script>
+</body>
+</html>
