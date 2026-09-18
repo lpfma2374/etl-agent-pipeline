@@ -27,16 +27,21 @@
   </div>
   <div id="etl-data-view" class="hidden">data view</div>
   <script type="module">
-    import("./analytics.js").then(async () => {
+    const set = (m) => { document.querySelector("#an-status").textContent = m; document.title = m; };
+    set("1: a importar analytics.js…");
+    try {
+      const m = await import("./analytics.js");
+      set("2: import ok — a abrir analytics…");
+      await m.etlAnalytics ? 0 : 0; // no-op
       await window.etlAnalytics.openAnalytics("6aad277f5aa287b251f4f71a");
-      try {
-        await window.etlAnalytics.runExplore();
-        const out = document.querySelector("#an-explore-out").textContent;
-        document.title = out.includes("Mochila") ? "SELFTEST PASS" : "SELFTEST SQL FAIL";
-      } catch (e) {
-        document.title = "SELFTEST FAIL: " + e.message;
-      }
-    });
+      const st = document.querySelector("#an-status").textContent;
+      set("3: perfil: " + st);
+      await window.etlAnalytics.runExplore();
+      const out = document.querySelector("#an-explore-out").textContent;
+      document.title = out.includes("Mochila") ? "SELFTEST PASS" : "SELFTEST SQL FAIL";
+    } catch (e) {
+      set("FAIL: " + (e && e.message ? e.message : e));
+    }
   </script>
 </body>
 </html>
