@@ -150,7 +150,10 @@
       </div>
 
       <div id="etl-data-view" class="hidden">
-        <div class="etl-section-title">Dados extraídos <span id="etl-data-count" class="etl-count-badge"></span></div>
+        <div class="etl-section-title-row">
+          <span class="etl-section-title">Dados extraídos <span id="etl-data-count" class="etl-count-badge"></span></span>
+          <button id="etl-analytics-btn" class="cta-pill hidden">Analytics</button>
+        </div>
         <p class="hint">Dados de leitura — não é possível editar, remover ou apagar registos aqui. As alterações passam por transformações dbt.</p>
         <div id="etl-data-meta" class="etl-data-meta"></div>
         <div class="table-wrap etl-preview-wrap">
@@ -162,6 +165,22 @@
         <textarea id="etl-notes" rows="4" placeholder="Ex.: remover linhas com preço vazio; converter a coluna data para AAAA-MM-DD; criar a coluna total = preço × quantidade…"></textarea>
         <div id="etl-step2-error" class="etl-error hidden"></div>
         <button id="etl-transform-btn" class="cta-pill etl-primary">Executar transformações e exportar</button>
+      </div>
+
+      <div id="etl-analytics-view" class="hidden">
+        <div class="etl-an-head">
+          <button id="etl-analytics-back" class="etl-ghost-btn">&larr; Voltar aos dados</button>
+          <span id="an-status" class="muted">—</span>
+        </div>
+        <div class="an-overview" id="an-overview"></div>
+        <div class="an-grid" id="an-grid"></div>
+        <div class="an-explore">
+          <div class="etl-section-title">Explorar com SQL (DuckDB no browser)</div>
+          <p class="hint">Consulta ao vivo sobre a tabela <code>staging</code>. Máx. 200 linhas devolvidas.</p>
+          <textarea id="an-sql" rows="2" placeholder="SELECT produto, COUNT(*) AS n FROM staging GROUP BY 1 ORDER BY n DESC"></textarea>
+          <button id="an-sql-run" class="cta-pill etl-primary">Executar SQL</button>
+          <div id="an-explore-out"></div>
+        </div>
       </div>
     </div>
 
@@ -197,5 +216,7 @@
 
 <script src="app.js"></script>
 <script src="etl.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<script type="module" src="analytics.js"></script>
 </body>
 </html>

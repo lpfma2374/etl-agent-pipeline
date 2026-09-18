@@ -140,6 +140,8 @@ function renderPreview(s) {
     return;
   }
   $$("#etl-data-count").textContent = `${p.row_count ?? "?"} registos · ${p.columns.length} colunas`;
+  $$("#etl-analytics-btn").classList.toggle(
+    "hidden", !(p.analytics && p.analytics.parquet_url));
   $$("#etl-data-meta").innerHTML =
     (p.columns || []).map((c) =>
       `<span class="etl-chip">${esc2(c.name)} <em>${esc2(c.dtype || "")}</em></span>`).join("");
@@ -219,4 +221,10 @@ document.addEventListener("DOMContentLoaded", () => {
   $$("#etl-view-execs").addEventListener("click", () => { etlClose(); document.getElementById("execucoes").scrollIntoView({ behavior: "smooth" }); });
   $$("#etl-done").addEventListener("click", etlClose);
   $$("#etl-done-2").addEventListener("click", etlClose);
+  $$("#etl-analytics-btn").addEventListener("click", () =>
+    window.etlAnalytics && window.etlAnalytics.openAnalytics(ETLM.id));
+  $$("#etl-analytics-back").addEventListener("click", () =>
+    window.etlAnalytics && window.etlAnalytics.closeAnalytics());
+  $$("#etl-sql-run").addEventListener("click", () =>
+    window.etlAnalytics && window.etlAnalytics.runExplore());
 });

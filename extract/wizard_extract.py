@@ -68,6 +68,9 @@ def main() -> int:
     con.execute("CREATE TABLE stg.raw_data AS SELECT * FROM df_view")
     con.unregister("df_view")
     count = con.execute("SELECT COUNT(*) FROM stg.raw_data").fetchone()[0]
+    # export parquet para o botão Analytics (DuckDB-WASM no browser)
+    parquet = os.path.join(workdir, "staging.parquet")
+    con.execute(f"COPY (SELECT * FROM stg.raw_data) TO '{parquet}' (FORMAT PARQUET)")
     con.close()
 
     sample = json.loads(df.head(50).to_json(orient="records", force_ascii=False))
@@ -90,6 +93,7 @@ def main() -> int:
         "workdir": workdir,
         "seconds": round(time.time() - t0, 1),
         "preview": os.path.join(workdir, "preview.json"),
+        "parquet": parquet,
     }))
     return 0
 

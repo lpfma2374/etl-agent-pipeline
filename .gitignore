@@ -14,3 +14,6 @@ __pycache__/
 venv/
 gx/
 export/
+
+# dados do wizard 'Novo ETL' (nunca commitar dados do utilizador)
+wizard/
