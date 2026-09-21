@@ -114,3 +114,10 @@ Uma entrada por linha, um relatório detalhado por execução nesta pasta.
 | 2026-09-18_1730 b01 | excel → airtable | {'raw_prospetos': 3, 'raw_contexto_excluidos': 3, 'raw_cobertura': 10, 'raw_metodologia': 7} | ✅ +23 |
 | 2026-09-18_1730 SUM | excel → airtable (batch 50) | 1 lotes | ✅ 23 entregues (upsert) | cumulativo: {} |
 | 2026-09-18 17:30 | radar_de_alas.xlsx → Airtable 'Teste ETL' (4 tabelas) | 23 | 1 lote | ✅ GE 4/4, idempotente |
+| 2026-09-21_1845 b01 | csv → cloudflare_d1 | {'raw_patrimonio_financeiro': 36, 'raw_patrimonio_configuracaocategoria': 50, 'raw_patrimonio_heranca': 2, 'raw_patrimonio_viatura': 2, 'raw_patrimonio_recheio': 18, 'raw_patrimonio_imovel': 1, 'raw_patrimonio_seguro': 10, 'raw_patrimonio_poupanca': 5, 'raw_patrimonio_credito': 5} | ✅ +129 |
+| 2026-09-21_1845 b02 | csv → cloudflare_d1 | {'raw_patrimonio_configuracaocategoria': 28} | ✅ +107 |
+| 2026-09-21_1845 SUM | csv → cloudflare_d1 (batch 50) | 2 lotes | ✅ 236 entregues (upsert) | cumulativo: {} |
+| 2026-09-21_1846 b01 | csv → cloudflare_d1 | {'raw_patrimonio_financeiro': 36, 'raw_patrimonio_configuracaocategoria': 50, 'raw_patrimonio_heranca': 2, 'raw_patrimonio_viatura': 2, 'raw_patrimonio_recheio': 18, 'raw_patrimonio_imovel': 1, 'raw_patrimonio_seguro': 10, 'raw_patrimonio_poupanca': 5, 'raw_patrimonio_credito': 5} | ✅ +129 |
+| 2026-09-21_1846 b02 | csv → cloudflare_d1 | {'raw_patrimonio_configuracaocategoria': 28} | ✅ +107 |
+| 2026-09-21_1846 SUM | csv → cloudflare_d1 (batch 50) | 2 lotes | ✅ 236 entregues (upsert) | cumulativo: {} |
+| 2026-09-21 18:45 | app Base44 Património → D1 'patrimonio' (12 tabelas) | 157 | 2 lotes | ✅ GE 9/9, idempotente |

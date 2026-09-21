@@ -1,0 +1,59 @@
+{
+ "expectation_suite_name": "patrimonio_credito_suite",
+ "expectations": [
+  {
+   "expectation_type": "expect_table_columns_to_match_ordered_list",
+   "kwargs": {
+    "column_list": [
+     "id",
+     "banco",
+     "tipo_credito",
+     "titular",
+     "prestacao_mensal",
+     "imovel_associado",
+     "viatura_associada",
+     "valor_aquisicao",
+     "sinal",
+     "valor_credito",
+     "valor_atual",
+     "valor_avaliacao",
+     "created_date",
+     "updated_date",
+     "created_by",
+     "created_by_id"
+    ]
+   },
+   "meta": {
+    "notes": "Schema espelho da entidade Credito (Base44 Património)"
+   }
+  },
+  {
+   "expectation_type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "id"
+   },
+   "meta": {
+    "notes": "PK (id Base44) obrigatória"
+   }
+  },
+  {
+   "expectation_type": "expect_column_values_to_be_unique",
+   "kwargs": {
+    "column": "id"
+   },
+   "meta": {
+    "notes": "PK única"
+   }
+  },
+  {
+   "expectation_type": "expect_table_row_count_to_be_between",
+   "kwargs": {
+    "min_value": 1,
+    "max_value": 1000
+   },
+   "meta": {
+    "notes": "Volume sanity"
+   }
+  }
+ ]
+}

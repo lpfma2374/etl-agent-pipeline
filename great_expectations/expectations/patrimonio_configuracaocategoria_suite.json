@@ -1,0 +1,51 @@
+{
+ "expectation_suite_name": "patrimonio_configuracaocategoria_suite",
+ "expectations": [
+  {
+   "expectation_type": "expect_table_columns_to_match_ordered_list",
+   "kwargs": {
+    "column_list": [
+     "id",
+     "categoria",
+     "valor",
+     "ordem",
+     "created_date",
+     "updated_date",
+     "created_by",
+     "created_by_id"
+    ]
+   },
+   "meta": {
+    "notes": "Schema espelho da entidade ConfiguracaoCategoria (Base44 Património)"
+   }
+  },
+  {
+   "expectation_type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "id"
+   },
+   "meta": {
+    "notes": "PK (id Base44) obrigatória"
+   }
+  },
+  {
+   "expectation_type": "expect_column_values_to_be_unique",
+   "kwargs": {
+    "column": "id"
+   },
+   "meta": {
+    "notes": "PK única"
+   }
+  },
+  {
+   "expectation_type": "expect_table_row_count_to_be_between",
+   "kwargs": {
+    "min_value": 1,
+    "max_value": 1000
+   },
+   "meta": {
+    "notes": "Volume sanity"
+   }
+  }
+ ]
+}

@@ -18,3 +18,12 @@ sources:
       - name: raw_contexto_excluidos
       - name: raw_cobertura
       - name: raw_metodologia
+      - name: raw_patrimonio_financeiro
+      - name: raw_patrimonio_configuracaocategoria
+      - name: raw_patrimonio_heranca
+      - name: raw_patrimonio_viatura
+      - name: raw_patrimonio_recheio
+      - name: raw_patrimonio_imovel
+      - name: raw_patrimonio_seguro
+      - name: raw_patrimonio_poupanca
+      - name: raw_patrimonio_credito

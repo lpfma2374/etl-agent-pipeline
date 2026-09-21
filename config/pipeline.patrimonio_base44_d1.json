@@ -1,0 +1,113 @@
+{
+  "name": "Base44 app Património (6987c7e8dcf52dc2e3f18c42, 9 entidades com dados) -> Cloudflare D1 (base nova 'patrimonio')",
+  "tables": [
+    {
+      "source": {
+        "type": "csv",
+        "name": "patrimonio_financeiro",
+        "path": "data/patrimonio/financeiro.csv"
+      },
+      "mart": "mart_patrimonio_financeiro",
+      "destination_table": "Financeiro",
+      "primary_key": "id",
+      "checkpoint": "patrimonio_financeiro_checkpoint"
+    },
+    {
+      "source": {
+        "type": "csv",
+        "name": "patrimonio_configuracaocategoria",
+        "path": "data/patrimonio/configuracaocategoria.csv"
+      },
+      "mart": "mart_patrimonio_configuracaocategoria",
+      "destination_table": "ConfiguracaoCategoria",
+      "primary_key": "id",
+      "checkpoint": "patrimonio_configuracaocategoria_checkpoint"
+    },
+    {
+      "source": {
+        "type": "csv",
+        "name": "patrimonio_heranca",
+        "path": "data/patrimonio/heranca.csv"
+      },
+      "mart": "mart_patrimonio_heranca",
+      "destination_table": "Heranca",
+      "primary_key": "id",
+      "checkpoint": "patrimonio_heranca_checkpoint"
+    },
+    {
+      "source": {
+        "type": "csv",
+        "name": "patrimonio_viatura",
+        "path": "data/patrimonio/viatura.csv"
+      },
+      "mart": "mart_patrimonio_viatura",
+      "destination_table": "Viatura",
+      "primary_key": "id",
+      "checkpoint": "patrimonio_viatura_checkpoint"
+    },
+    {
+      "source": {
+        "type": "csv",
+        "name": "patrimonio_recheio",
+        "path": "data/patrimonio/recheio.csv"
+      },
+      "mart": "mart_patrimonio_recheio",
+      "destination_table": "Recheio",
+      "primary_key": "id",
+      "checkpoint": "patrimonio_recheio_checkpoint"
+    },
+    {
+      "source": {
+        "type": "csv",
+        "name": "patrimonio_imovel",
+        "path": "data/patrimonio/imovel.csv"
+      },
+      "mart": "mart_patrimonio_imovel",
+      "destination_table": "Imovel",
+      "primary_key": "id",
+      "checkpoint": "patrimonio_imovel_checkpoint"
+    },
+    {
+      "source": {
+        "type": "csv",
+        "name": "patrimonio_seguro",
+        "path": "data/patrimonio/seguro.csv"
+      },
+      "mart": "mart_patrimonio_seguro",
+      "destination_table": "Seguro",
+      "primary_key": "id",
+      "checkpoint": "patrimonio_seguro_checkpoint"
+    },
+    {
+      "source": {
+        "type": "csv",
+        "name": "patrimonio_poupanca",
+        "path": "data/patrimonio/poupanca.csv"
+      },
+      "mart": "mart_patrimonio_poupanca",
+      "destination_table": "Poupanca",
+      "primary_key": "id",
+      "checkpoint": "patrimonio_poupanca_checkpoint"
+    },
+    {
+      "source": {
+        "type": "csv",
+        "name": "patrimonio_credito",
+        "path": "data/patrimonio/credito.csv"
+      },
+      "mart": "mart_patrimonio_credito",
+      "destination_table": "Credito",
+      "primary_key": "id",
+      "checkpoint": "patrimonio_credito_checkpoint"
+    }
+  ],
+  "destination": {
+    "type": "cloudflare_d1",
+    "database_id": "a5b173fa-d26d-44a8-b22b-386709d87b21"
+  },
+  "_notas": "Base D1 'patrimonio' criada via API 2026-09-21. Origem: app Base44 Património, dados extraídos via read_entities (157 registos, 9 entidades com dados) para data/patrimonio/*.csv (gitignored). PK = id (Base44). 3 entidades vazias (Participacao, Documento, Barco) criadas como tabelas vazias no D1 via DDL manual. CF_ACCOUNT_ID via env. Segredos NUNCA aqui.",
+  "_secrets_via_env": [
+    "CF_API_TOKEN",
+    "CF_ACCOUNT_ID"
+  ]
+}
